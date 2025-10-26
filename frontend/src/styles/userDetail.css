@@ -21,3 +21,30 @@
   justify-content: center;
   margin-top: 100px;
 }
+
+
+
+.user-details-page .ant-descriptions-item-label {
+  word-break: break-word; 
+}
+
+.user-details-page .profile-image-url {
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  color: #595959;
+}
+
+.user-details-page .profile-image-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  margin: 5px 0;
+  object-fit: cover;
+}
+
+@media (min-width: 768px) {
+  .user-details-page .profile-image-container img {
+    max-width: 200px;
+  }
+}
