@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
- import axios from "axios";
+ import api from "../api";
 import { Spin, Descriptions, Collapse, Card, List } from "antd";
 import "../../styles/userDetail.css";
 
@@ -15,7 +15,7 @@ const UserDetails = () => {
     const fetchUserDetails = async () => {
         try {
             const token = localStorage.getItem("token");
-            const res = await  axios. get(`/api/v1/admin/user/${id}`, {
+            const res = await  api. get(`/api/v1/admin/user/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setUser(res.data.data);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
- import axios from "axios";
+ import api from "../api";
 import "../../styles/viewContestDetails.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,7 +19,7 @@ const ContestView = () => {
         setLoading(true);
         try {
             const token = localStorage.getItem("token");
-            const res = await  axios. get("/api/v1/admin/getAllContests", {
+            const res = await  api. get("/api/v1/admin/getAllContests", {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
@@ -57,7 +57,7 @@ const ContestView = () => {
         if (result.isConfirmed) {
             try {
                 const token = localStorage.getItem("token");
-                await  axios. delete(`/api/v1/admin/deleteContest/${id}`, {
+                await  api. delete(`/api/v1/admin/deleteContest/${id}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 

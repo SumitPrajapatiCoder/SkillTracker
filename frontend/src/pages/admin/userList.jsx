@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
- import axios from "axios";
+ import api from "../api";
 import "../../styles/userList.css";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
@@ -29,7 +29,7 @@ const AdminUserList = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
-      const res = await  axios. get("/api/v1/admin/all-users", {
+      const res = await  api. get("/api/v1/admin/all-users", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(res.data.data);
@@ -49,7 +49,7 @@ const AdminUserList = () => {
   const handleAdminToggle = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      await  axios. put(
+      await  api. put(
         `/api/v1/admin/toggle-admin/${id}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
@@ -67,7 +67,7 @@ const AdminUserList = () => {
       const url = isBlocked
         ? `/api/v1/admin/unblock-user/${id}`
         : `/api/v1/admin/block-user/${id}`;
-      await  axios. put(url, {}, { headers: { Authorization: `Bearer ${token}` } });
+      await  api. put(url, {}, { headers: { Authorization: `Bearer ${token}` } });
       toast.success(isBlocked ? "User unblocked" : "User blocked");
       fetchUsers();
     } catch (err) {
@@ -90,7 +90,7 @@ const AdminUserList = () => {
 
     try {
       const token = localStorage.getItem("token");
-      await  axios. delete(`/api/v1/admin/delete-user/${id}`, {
+      await  api. delete(`/api/v1/admin/delete-user/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("User deleted successfully!");

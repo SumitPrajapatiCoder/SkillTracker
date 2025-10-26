@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
- import axios from "axios";
+ import api from "../api";
 import "../styles/profile.css";
 import { FaPen, FaCamera, FaTrophy, FaEye, FaEyeSlash } from "react-icons/fa";
 import { toast } from "react-toastify";
@@ -62,7 +62,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await  axios. post(
+        const res = await  api. post(
           "/api/v1/user/get_User_data",
           {},
           { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
@@ -84,7 +84,7 @@ const Profile = () => {
     const fetchUserRank = async () => {
       try {
         const token = localStorage.getItem("token");
-        const { data } = await  axios. get("/api/v1/user/user-rank", {
+        const { data } = await  api. get("/api/v1/user/user-rank", {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (data.success && data.userRank) setUserRank(data.userRank);
@@ -99,7 +99,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchProgress = async () => {
       try {
-        const res = await  axios. get("/api/v1/user/progress", {
+        const res = await  api. get("/api/v1/user/progress", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         setProgress(res.data.data || {});
@@ -115,7 +115,7 @@ const Profile = () => {
     const fetchMockList = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await  axios. get("/api/v1/user/get-mock-cards", {
+        const res = await  api. get("/api/v1/user/get-mock-cards", {
           headers: { Authorization: `Bearer ${token}` },
         });
         const mocks = res.data.data.map((m) => {
@@ -143,7 +143,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchContestProgress = async () => {
       try {
-        const res = await  axios. get("/api/v1/user/progress-contest", {
+        const res = await  api. get("/api/v1/user/progress-contest", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         setContestProgress(res.data.data || []);
@@ -157,7 +157,7 @@ const Profile = () => {
   const handleVerifyOldPassword = async () => {
     try {
       if (!formData.oldPassword) return toast.error("Enter current password first");
-      const res = await  axios. post(
+      const res = await  api. post(
         "/api/v1/user/verify-password",
         { oldPassword: formData.oldPassword },
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
@@ -185,7 +185,7 @@ const Profile = () => {
           : {}),
       };
 
-      const res = await  axios. put("/api/v1/user/update_profile", payload, {
+      const res = await  api. put("/api/v1/user/update_profile", payload, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
 
@@ -212,7 +212,7 @@ const Profile = () => {
     const formDataImage = new FormData();
     formDataImage.append("image", selectedFile);
     try {
-      const res = await  axios. put("/api/v1/user/upload_profile_image", formDataImage, {
+      const res = await  api. put("/api/v1/user/upload_profile_image", formDataImage, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -245,7 +245,7 @@ const Profile = () => {
     if (!result.isConfirmed) return;
 
     try {
-      const res = await  axios. delete("/api/v1/user/delete_profile_image", {
+      const res = await  api. delete("/api/v1/user/delete_profile_image", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setUser(res.data.data);

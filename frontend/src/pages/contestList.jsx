@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
- import axios from "axios";
+ import api from "../api";
 import { useNavigate } from "react-router-dom";
 import {
     FaTrophy,
@@ -28,7 +28,7 @@ const ContestList = () => {
             try {
                 const token = localStorage.getItem("token");
                 if (!token) throw new Error("No token found");
-                const res = await  axios. get("/api/v1/user/get-languages", {
+                const res = await  api. get("/api/v1/user/get-languages", {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 if (res.data.success && res.data.data) {
@@ -49,9 +49,9 @@ const ContestList = () => {
                 if (!token) throw new Error("No token found");
 
                 const [contestsRes, leaderboardRes, userRankRes] = await Promise.all([
-                     axios. get("/api/v1/user/contestAll", { headers: { Authorization: `Bearer ${token}` } }),
-                     axios. get("/api/v1/user/leaderboard/global", { headers: { Authorization: `Bearer ${token}` } }),
-                     axios. get("/api/v1/user/user-rank", { headers: { Authorization: `Bearer ${token}` } }),
+                     api. get("/api/v1/user/contestAll", { headers: { Authorization: `Bearer ${token}` } }),
+                     api. get("/api/v1/user/leaderboard/global", { headers: { Authorization: `Bearer ${token}` } }),
+                     api. get("/api/v1/user/user-rank", { headers: { Authorization: `Bearer ${token}` } }),
                 ]);
 
                 let contestData = contestsRes.data.contests || [];

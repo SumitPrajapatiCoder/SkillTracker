@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
- import axios from "axios";
+ import api from "../api";
 import "../styles/mocklanguage.css";
 import { toast } from "react-toastify";
 import hljs from "highlight.js";
@@ -33,7 +33,7 @@ const MockLanguage = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await  axios. post(
+        const res = await  api. post(
           `/api/v1/user/get_User_data`,
           {},
           {
@@ -53,7 +53,7 @@ const MockLanguage = () => {
   const getMockStatus = async () => {
     try {
       const token = localStorage.getItem("token");
-      const check = await  axios. get(`/api/v1/user/mock-status/${language}`, {
+      const check = await  api. get(`/api/v1/user/mock-status/${language}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (check.data?.disable) {
@@ -78,7 +78,7 @@ const MockLanguage = () => {
         const status = await getMockStatus();
         if (status.disable) return;
 
-        const res = await  axios. get(`/api/v1/quiz/get-mock/${language}`, {
+        const res = await  api. get(`/api/v1/quiz/get-mock/${language}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAllQuestions(res.data.data || []);
@@ -154,7 +154,7 @@ const MockLanguage = () => {
 
     try {
       const token = localStorage.getItem("token");
-      await  axios. post(
+      await  api. post(
         "/api/v1/user/save-mock-result",
         { language, correct: finalScore, total: questions.length },
         { headers: { Authorization: `Bearer ${token}` } }

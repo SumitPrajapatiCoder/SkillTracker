@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../styles/header.css";
- import axios from "axios";
+ import api from "../api";
 import { FaBars, FaTimes, FaChevronDown, FaChevronUp, FaBell } from "react-icons/fa";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,7 +20,7 @@ const Header = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await  axios. post(
+        const res = await  api. post(
           `/api/v1/user/get_User_data`,
           {},
           {
@@ -40,7 +40,7 @@ const Header = () => {
   const fetchNotificationCount = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await  axios. get("/api/v1/user/notifications", {
+      const res = await  api. get("/api/v1/user/notifications", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const notifications = res.data.notifications || [];

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
- import axios from "axios";
+ import api from "../api";
 import RoadMapText from "./roadText";
 import { toast } from "react-toastify";
 import "../styles/roadmap.css";
@@ -27,7 +27,7 @@ const Roadmap = () => {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      const res = await  axios. get("/api/v1/user/roadmap", {
+      const res = await  api. get("/api/v1/user/roadmap", {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.data.success) {
@@ -57,7 +57,7 @@ const Roadmap = () => {
     setGeneratingLang(language);
     try {
       const token = localStorage.getItem("token");
-      const res = await  axios. get(
+      const res = await  api. get(
         `/api/v1/user/roadmap?language=${encodeURIComponent(language)}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -86,7 +86,7 @@ const Roadmap = () => {
     setSavingLang(language);
     try {
       const token = localStorage.getItem("token");
-      const res = await  axios. post(
+      const res = await  api. post(
         "/api/v1/user/roadmap/save",
         { language, roadmap: roadmapByLanguage[language] },
         { headers: { Authorization: `Bearer ${token}` } }

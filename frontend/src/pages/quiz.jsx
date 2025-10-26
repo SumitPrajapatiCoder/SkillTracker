@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
- import axios from "axios";
+ import api from "../api";
 import "../styles/quiz.css";
 
 function Quiz() {
@@ -15,7 +15,7 @@ function Quiz() {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
-      const res = await  axios. get("/api/v1/user/get-quiz-cards", {
+      const res = await  api. get("/api/v1/user/get-quiz-cards", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
