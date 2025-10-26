@@ -1,0 +1,311 @@
+:root {
+  --primary-color: #4e8cff;
+  --gradient: linear-gradient(135deg, #4e8cff, #6f53ff);
+  --bg-glass: rgba(255, 255, 255, 0.75);
+  --box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  --blur: blur(8px);
+  --danger: #e74c3c;
+}
+
+body {
+  background: linear-gradient(to right, #e0eafc, #cfdef3);
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+}
+
+.admin-form {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 25px 30px;
+  background: var(--bg-glass);
+  border-radius: 16px;
+  box-shadow: var(--box-shadow);
+  backdrop-filter: var(--blur);
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.admin-form h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 25px;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+  justify-content: center;
+}
+
+.admin-form select,
+.admin-form input {
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: var(--blur);
+  transition: 0.3s ease;
+  flex: 1 1 180px;
+  min-width: 120px;
+}
+
+.admin-form input:focus,
+.admin-form select:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 6px rgba(78, 140, 255, 0.2);
+}
+
+.admin-form button {
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  border: none;
+  background: var(--gradient);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.admin-form button:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.question-list {
+  list-style: none;
+  padding: 0;
+}
+
+.question-card {
+  background-color: #fff;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  position: relative;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.code-block {
+  background-color: #f9f9f9;
+  padding: 6px;
+  border-radius: 6px;
+  font-family: "Courier New", monospace;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  border: 1px solid #ccc;
+  margin: 6px 0;
+  font-size: 0.85rem;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+.option-item {
+  background-color: #f4f4f4;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.correct-option {
+  background-color: #d4edda;
+  border-color: #28a745;
+  color: #155724;
+  font-weight: bold;
+}
+
+.option-label {
+  font-weight: 600;
+  margin-right: 6px;
+  color: #333;
+}
+
+.delete-button {
+  background: var(--danger);
+  color: white;
+  padding: 6px 12px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.delete-button:hover {
+  background: #c0392b;
+  transform: scale(1.02);
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.edit-buttons .save-btn {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.edit-buttons .cancel-btn {
+  background: #888;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-form {
+    padding: 20px;
+    margin: 25px 12px;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .question-card {
+    padding: 10px;
+  }
+
+  .code-block {
+    font-size: 0.8rem;
+  }
+
+  .option-item {
+    font-size: 0.8rem;
+    padding: 5px 6px;
+  }
+
+  .edit-buttons {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-form {
+    padding: 12px;
+    margin: 15px 8px;
+  }
+
+  .admin-form h2 {
+    font-size: 1.3rem;
+  }
+
+  .question-card {
+    padding: 8px;
+  }
+
+  .code-block {
+    font-size: 0.75rem;
+  }
+
+  .option-item {
+    font-size: 0.75rem;
+    padding: 4px 6px;
+  }
+
+  .edit-buttons .save-btn,
+  .edit-buttons .cancel-btn,
+  .delete-button {
+    width: 100%;
+  }
+}
+
+
+.question-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+
+.question-page-btn {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: var(--blur);
+  border: 1px solid #bbb;
+  color: #444;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.question-page-btn:hover {
+  background: #6f53ff;
+  color: #fff;
+  border-color: #5a3edc;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(78, 140, 255, 0.2);
+}
+
+.question-page-btn.question-active {
+  background: #5ad65a;
+  color: #fff;
+  font-weight: 600;
+  border-color: #3a6fd1;
+  box-shadow: 0 4px 12px rgba(78, 140, 255, 0.3);
+}
+
+.question-page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background-color: #eee;
+  border-color: #ddd;
+  color: #aaa;
+}
+
+.question-dots {
+  font-weight: bold;
+  color: #666;
+  padding: 0 6px;
+}

@@ -1,0 +1,278 @@
+:root {
+  --primary-color: #4e8cff;
+  --gradient: linear-gradient(135deg, #4e8cff, #6f53ff);
+  --bg-glass: rgba(255, 255, 255, 0.75);
+  --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --blur: blur(10px);
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+}
+
+.list-card-container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 40px;
+  background: var(--bg-glass);
+  border-radius: 20px;
+  box-shadow: var(--box-shadow);
+  backdrop-filter: var(--blur);
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.list-card-container h2 {
+  text-align: center;
+  font-size: 2rem;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 30px;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.filter-bar select,
+.filter-bar input,
+.filter-bar button {
+  padding: 12px 14px;
+  font-size: 1rem;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: var(--blur);
+  transition: 0.3s ease;
+  flex: 1 1 200px;
+  min-width: 120px;
+}
+
+.filter-bar select:focus,
+.filter-bar input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 8px rgba(78, 140, 255, 0.2);
+}
+
+.filter-bar button {
+  border: none;
+  background: var(--gradient);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  flex: 1 1 100px;
+}
+
+.filter-bar button:hover {
+  filter: brightness(1.05);
+  transform: translateY(-2px);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: var(--blur);
+  border-radius: 16px;
+  padding: 20px;
+  border-left: 5px solid var(--primary-color);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+  animation: fadeInUp 0.5s ease forwards;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card h3 {
+  margin-top: 0;
+  font-size: 1.3rem;
+  color: #333;
+}
+
+.card p {
+  margin: 6px 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.card-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.card-actions .delete-btn {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s, filter 0.2s;
+}
+
+.card-actions .delete-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.edit-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.edit-buttons .save-btn {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.edit-buttons .cancel-btn {
+  background: #888;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+  .list-card-container {
+    padding: 25px;
+    margin: 30px 15px;
+  }
+
+  .list-card-container h2 {
+    font-size: 1.6rem;
+  }
+
+  .filter-bar select,
+  .filter-bar input,
+  .filter-bar button {
+    flex: 1 1 100%;
+    font-size: 0.95rem;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+  }
+
+  .card h3 {
+    font-size: 1.1rem;
+  }
+
+  .card p {
+    font-size: 0.9rem;
+  }
+
+  .card-actions {
+    flex-direction: column;
+  }
+
+  .edit-buttons {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .list-card-container {
+    padding: 15px;
+    margin: 20px 10px;
+  }
+
+  .list-card-container h2 {
+    font-size: 1.4rem;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .card h3 {
+    font-size: 1rem;
+  }
+
+  .card p {
+    font-size: 0.85rem;
+  }
+
+  .filter-bar select,
+  .filter-bar input,
+  .filter-bar button {
+    font-size: 0.9rem;
+  }
+
+  .card-actions .delete-btn,
+  .edit-buttons .save-btn,
+  .edit-buttons .cancel-btn {
+    width: 100%;
+  }
+}
+
+.list-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 25px;
+  padding: 10px 0;
+}
+
+
+.list-page-btn {
+  background: linear-gradient(135deg, #4e8cff, #6f53ff); 
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  min-width: 40px;
+  text-align: center;
+}
+
+
+.list-page-btn.list-active {
+  background: linear-gradient(135deg, #ff7a18, #ff4e50); 
+  color: #fff;
+  font-weight: 600;
+  border: none;
+}
+
+.list-page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #ccc;
+  color: #666;
+}
+
+
+.list-dots {
+  font-weight: bold;
+  color: #555;
+  padding: 0 6px;
+  font-size: 1rem;
+}

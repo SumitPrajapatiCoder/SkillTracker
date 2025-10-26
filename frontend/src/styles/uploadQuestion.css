@@ -1,0 +1,218 @@
+.container {
+  max-width: 750px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: linear-gradient(to bottom right, #ffffff, #f1f5f9);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  font-family: 'Segoe UI', sans-serif;
+  transition: all 0.3s ease-in-out;
+}
+
+.container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #1e293b;
+  font-size: 1.8rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+select,
+input,
+textarea,
+button {
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+select:focus,
+input:focus,
+textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+button {
+  background-color: #2563eb;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  margin-top: 0.5rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  border-radius: 8px;
+}
+
+button:hover {
+  background-color: #1e40af;
+  transform: translateY(-1px);
+}
+
+.toggle-btn {
+  background-color: #f59e0b;
+  color: #fff;
+}
+
+.toggle-btn:hover {
+  background-color: #d97706;
+}
+
+.count-input {
+  width: 100%;
+  text-align: center;
+  font-weight: 500;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+
+.generated-section {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-top: 1rem;
+}
+
+.generated-section h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #1e293b;
+}
+
+.question-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.question-box:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.question-box h4 {
+  color: #2563eb;
+  margin-bottom: 0.5rem;
+}
+
+.code-highlight {
+  background-color: #f3f4f6;
+  border-radius: 6px;
+  padding: 0.75rem;
+  font-family: "Consolas", monospace;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 0.75rem;
+}
+
+
+.manual-section {
+  background: #f9fafb;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+  transition: background 0.3s ease;
+}
+
+.manual-section:hover {
+  background: #f1f5f9;
+}
+
+
+.lang-list {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 12px;
+}
+
+.lang-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lang-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.delete-btn {
+  background: transparent;
+  color: #dc2626;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.delete-btn:hover {
+  color: #b91c1c;
+}
+
+
+.common-select {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; 
+  margin-bottom: 1.5rem; 
+}
+
+.common-select select,
+.common-select input.count-input {
+  flex: 1 1 150px;
+}
+
+
+@media screen and (max-width: 600px) {
+  .container {
+    padding: 1.5rem;
+  }
+
+  .button-row {
+    flex-direction: column;
+  }
+
+  button {
+    padding: 0.9rem;
+    font-size: 1.05rem;
+  }
+}

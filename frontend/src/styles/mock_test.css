@@ -1,0 +1,187 @@
+.mocktest-page {
+  padding: 2rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1f1c2c, #928dab); 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+}
+
+.mocktest-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  background: linear-gradient(90deg, #ff9a9e, #fad0c4); 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: slideDown 0.7s ease forwards;
+}
+
+.mocktest-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.8rem;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 1rem;
+}
+
+.mocktest-card {
+  background: linear-gradient(145deg, #4e4376, #2b5876); 
+  border-radius: 20px;
+  padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mocktest-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 18px 35px rgba(0,0,0,0.4);
+}
+
+.mocktest-card-header {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #f7971e, #ffd200);
+  padding: 0.6rem 1.4rem;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #000;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+  z-index: 2;
+}
+
+.mocktest-card-content p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  color: #e0e0e0;
+}
+
+.mocktest-button {
+  margin-top: 1rem;
+  padding: 0.7rem 1.5rem;
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  z-index: 1;
+}
+
+.mocktest-button:hover {
+  background: linear-gradient(135deg, #dd2476, #ff512f);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.loading-text {
+  font-size: 1.2rem;
+  color: #c0c0c0;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .mocktest-card {
+    padding: 2rem 1rem 1rem 1rem;
+  }
+  .mocktest-card-header {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    top: -18px;
+  }
+  .mocktest-card-content p {
+    font-size: 0.95rem;
+  }
+  .mocktest-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mocktest-card {
+    width: 90%;
+    padding: 1.8rem 1rem 1rem 1rem;
+  }
+  .mocktest-card-header {
+    font-size: 0.95rem;
+    padding: 0.4rem 0.8rem;
+    top: -16px;
+  }
+  .mocktest-card-content p {
+    font-size: 0.9rem;
+  }
+  .mocktest-title {
+    font-size: 1.7rem;
+  }
+}
+
+
+.mocktest-pagination-modern {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+.mocktest-page-btn {
+  background: linear-gradient(145deg, #4e4376, #2b5876); 
+  border: none;
+  color: #fff;
+  padding: 10px 16px;
+  font-weight: 600;
+  border-radius: 14px; 
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 40px;
+  text-align: center;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.35);
+}
+
+.mocktest-page-btn:hover:not(:disabled) {
+  background: linear-gradient(145deg, #2b5876, #4e4376);
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 18px 35px rgba(0,0,0,0.4);
+}
+
+.mocktest-page-btn.active {
+  background: linear-gradient(135deg, #ff512f, #dd2476); 
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  transform: scale(1.05);
+  color: #fff;
+}
+
+.mocktest-page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: brightness(0.8);
+}
+
+.mocktest-ellipsis {
+  color: #e0e0e0;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 0 6px;
+  user-select: none;
+}
