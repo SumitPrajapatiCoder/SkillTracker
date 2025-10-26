@@ -33,8 +33,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("API Base URL:", import.meta.env.VITE_API_URL); // Log base URL
-      console.log("Login payload:", { identifier, password }); // Log payload
+      console.log("API Base URL:", import.meta.env.VITE_API_URL); 
+      console.log("Login payload:", { identifier, password });
 
       const res = await api.post("/user/login", { identifier, password });
 
