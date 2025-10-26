@@ -15,7 +15,7 @@ const UserDetails = () => {
     const fetchUserDetails = async () => {
         try {
             const token = localStorage.getItem("token");
-            const res = await  api.get(`/api/v1/admin/user/${id}`, {
+            const res = await  api.get(`/admin/user/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setUser(res.data.data);

@@ -16,7 +16,7 @@ function Notification() {
     const fetchNotifications = async () => {
         try {
             const token = localStorage.getItem("token");
-            const response = await  api.get("/api/v1/user/notifications", {
+            const response = await  api.get("/user/notifications", {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setNotifications(response.data.notifications || []);
@@ -32,7 +32,7 @@ function Notification() {
         try {
             const token = localStorage.getItem("token");
             await  api.post(
-                "/api/v1/user/notifications/read",
+                "/user/notifications/read",
                 { notificationId: id },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -50,7 +50,7 @@ function Notification() {
     const deleteNotification = async (id) => {
         try {
             const token = localStorage.getItem("token");
-            await  api.delete(`/api/v1/user/notifications/${id}`, {
+            await  api.delete(`/user/notifications/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             toast.success("Notification deleted");
@@ -76,7 +76,7 @@ function Notification() {
         if (!result.isConfirmed) return;
         try {
             const token = localStorage.getItem("token");
-            await  api.delete("/api/v1/user/notification/all", {
+            await  api.delete("/user/notification/all", {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setNotifications([]);

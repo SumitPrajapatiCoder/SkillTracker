@@ -24,7 +24,7 @@ const StudyPlan = () => {
       setError("");
       try {
         const token = localStorage.getItem("token");
-        const res = await  api.get("/api/v1/user/study-plan", {
+        const res = await  api.get("/user/study-plan", {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (res.data.success) {
@@ -58,7 +58,7 @@ const StudyPlan = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await  api.get(
-        `/api/v1/user/study-plan?language=${encodeURIComponent(language)}`,
+        `/user/study-plan?language=${encodeURIComponent(language)}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       if (res.data.success) {
@@ -87,7 +87,7 @@ const StudyPlan = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await  api.post(
-        "/api/v1/user/study-plan/save",
+        "/user/study-plan/save",
         { language, studyPlan: studyPlansByLanguage[language] },
         { headers: { Authorization: `Bearer ${token}` } }
       );

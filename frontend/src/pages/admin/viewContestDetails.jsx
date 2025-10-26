@@ -19,7 +19,7 @@ const ContestView = () => {
         setLoading(true);
         try {
             const token = localStorage.getItem("token");
-            const res = await  api.get("/api/v1/admin/getAllContests", {
+            const res = await  api.get("/admin/getAllContests", {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
@@ -57,7 +57,7 @@ const ContestView = () => {
         if (result.isConfirmed) {
             try {
                 const token = localStorage.getItem("token");
-                await  api.delete(`/api/v1/admin/deleteContest/${id}`, {
+                await  api.delete(`/admin/deleteContest/${id}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 

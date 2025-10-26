@@ -32,7 +32,7 @@ const ContestUpload = () => {
             const token = localStorage.getItem("token");
 
             const res = await  api.post(
-                "/api/v1/admin/generateContestQuestions",
+                "/admin/generateContestQuestions",
                 { questionSize },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -69,7 +69,7 @@ const ContestUpload = () => {
         try {
             const token = localStorage.getItem("token");
             const res = await  api.post(
-                "/api/v1/admin/createContest",
+                "/admin/createContest",
                 {
                     questionSize: selectedQuestions.length,
                     timeDuration,

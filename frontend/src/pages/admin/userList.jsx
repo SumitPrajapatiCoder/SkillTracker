@@ -29,7 +29,7 @@ const AdminUserList = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
-      const res = await  api.get("/api/v1/admin/all-users", {
+      const res = await  api.get("/admin/all-users", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(res.data.data);
@@ -50,7 +50,7 @@ const AdminUserList = () => {
     try {
       const token = localStorage.getItem("token");
       await  api.put(
-        `/api/v1/admin/toggle-admin/${id}`,
+        `/admin/toggle-admin/${id}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -65,8 +65,8 @@ const AdminUserList = () => {
     try {
       const token = localStorage.getItem("token");
       const url = isBlocked
-        ? `/api/v1/admin/unblock-user/${id}`
-        : `/api/v1/admin/block-user/${id}`;
+        ? `/admin/unblock-user/${id}`
+        : `/admin/block-user/${id}`;
       await  api.put(url, {}, { headers: { Authorization: `Bearer ${token}` } });
       toast.success(isBlocked ? "User unblocked" : "User blocked");
       fetchUsers();
@@ -90,7 +90,7 @@ const AdminUserList = () => {
 
     try {
       const token = localStorage.getItem("token");
-      await  api.delete(`/api/v1/admin/delete-user/${id}`, {
+      await  api.delete(`/admin/delete-user/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("User deleted successfully!");

@@ -26,8 +26,8 @@ const ListCardDetails = () => {
       const token = localStorage.getItem("token");
       const url =
         type === "quiz"
-          ? "/api/v1/admin/get-quiz-cards"
-          : "/api/v1/admin/get-mock-cards";
+          ? "/admin/get-quiz-cards"
+          : "/admin/get-mock-cards";
 
       const res = await  api.get(url, {
         headers: { Authorization: `Bearer ${token}` },
@@ -69,7 +69,7 @@ const ListCardDetails = () => {
 
     try {
       const token = localStorage.getItem("token");
-      await  api.delete(`/api/v1/admin/delete-card/${id}?type=${type}`, {
+      await  api.delete(`/admin/delete-card/${id}?type=${type}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCards((prev) => prev.filter((c) => c._id !== id));
@@ -94,7 +94,7 @@ const ListCardDetails = () => {
     try {
       const token = localStorage.getItem("token");
       await  api.put(
-        `/api/v1/admin/update-card/${editMode}?type=${type}`,
+        `/admin/update-card/${editMode}?type=${type}`,
         editForm,
         {
           headers: { Authorization: `Bearer ${token}` },

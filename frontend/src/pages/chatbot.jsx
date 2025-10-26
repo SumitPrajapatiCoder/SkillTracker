@@ -36,7 +36,7 @@ function Chatbot() {
     const fetchUser = async () => {
       try {
         const res = await  api.post(
-          `/api/v1/user/get_User_data`,
+          `/user/get_User_data`,
           {},
           { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
         );
@@ -53,7 +53,7 @@ function Chatbot() {
 
     const fetchHistory = async () => {
       try {
-        const res = await  api.get("/api/v1/user/chat-history", {
+        const res = await  api.get("/user/chat-history", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         if (res.data.success) setMessages(res.data.chatHistory);
@@ -122,7 +122,7 @@ function Chatbot() {
     try {
       const token = localStorage.getItem("token");
       const res = await  api.post(
-        "/api/v1/user/chatbot",
+        "/user/chatbot",
         { messages: [{ text: input }] },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -195,7 +195,7 @@ function Chatbot() {
     if (!result.isConfirmed) return;
 
     try {
-      const res = await  api.delete("/api/v1/user/clear-chat-history", {
+      const res = await  api.delete("/user/clear-chat-history", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       if (res.data.success) {

@@ -27,7 +27,7 @@ const Roadmap = () => {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      const res = await  api.get("/api/v1/user/roadmap", {
+      const res = await  api.get("/user/roadmap", {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.data.success) {
@@ -58,7 +58,7 @@ const Roadmap = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await  api.get(
-        `/api/v1/user/roadmap?language=${encodeURIComponent(language)}`,
+        `/user/roadmap?language=${encodeURIComponent(language)}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       if (res.data.success) {
@@ -87,7 +87,7 @@ const Roadmap = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await  api.post(
-        "/api/v1/user/roadmap/save",
+        "/user/roadmap/save",
         { language, roadmap: roadmapByLanguage[language] },
         { headers: { Authorization: `Bearer ${token}` } }
       );

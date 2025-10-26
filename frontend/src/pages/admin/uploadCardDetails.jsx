@@ -15,7 +15,7 @@ const UploadCardDetails = () => {
   const fetchLanguages = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await  api.get("/api/v1/admin/get-languages", {
+      const res = await  api.get("/admin/get-languages", {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.data.success) {
@@ -38,7 +38,7 @@ const UploadCardDetails = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      await  api.post("/api/v1/admin/add-card", formData, {
+      await  api.post("/admin/add-card", formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Card uploaded successfully!");

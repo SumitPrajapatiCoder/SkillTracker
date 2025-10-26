@@ -14,9 +14,9 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.use('/api/v1/user', require("./routes/userRoute"));
-app.use('/api/v1/admin', require("./routes/adminRoute"));
-app.use('/api/v1/quiz', require("./routes/quizRoute"));
+app.use('/user', require("./routes/userRoute"));
+app.use('/admin', require("./routes/adminRoute"));
+app.use('/quiz', require("./routes/quizRoute"));
 
 
 

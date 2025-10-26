@@ -21,7 +21,7 @@ const Header = () => {
     const fetchUser = async () => {
       try {
         const res = await  api.post(
-          `/api/v1/user/get_User_data`,
+          `/user/get_User_data`,
           {},
           {
             headers: {
@@ -40,7 +40,7 @@ const Header = () => {
   const fetchNotificationCount = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await  api.get("/api/v1/user/notifications", {
+      const res = await  api.get("/user/notifications", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const notifications = res.data.notifications || [];

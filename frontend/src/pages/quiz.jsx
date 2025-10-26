@@ -15,7 +15,7 @@ function Quiz() {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
-      const res = await  api.get("/api/v1/user/get-quiz-cards", {
+      const res = await  api.get("/user/get-quiz-cards", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
