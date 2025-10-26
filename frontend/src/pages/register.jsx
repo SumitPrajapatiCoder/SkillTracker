@@ -16,7 +16,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await  api. post("/api/v1/user/register", form);
+      const res = await  api.post("/api/v1/user/register", form);
       if (res.data.success) {
         toast.success("Registration Successful!");
         navigate("/");

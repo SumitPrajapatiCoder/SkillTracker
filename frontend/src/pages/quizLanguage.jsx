@@ -25,7 +25,7 @@ const QuizLanguage = () => {
     const fetchQuestions = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await  api. get(`/api/v1/quiz/get-quiz/${language}`, {
+        const res = await  api.get(`/api/v1/quiz/get-quiz/${language}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAllQuestions(res.data.data || []);
@@ -98,7 +98,7 @@ const QuizLanguage = () => {
 
       try {
         const token = localStorage.getItem("token");
-        await  api. post(
+        await  api.post(
           "/api/v1/user/save-quiz-result",
           { language, correct: finalScore, total: questions.length, playedQuestions },
           { headers: { Authorization: `Bearer ${token}` } }

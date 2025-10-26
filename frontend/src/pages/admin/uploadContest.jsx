@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
- import api from "../api";
+import api from "../../api";
 import "../../styles/uploadContest.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -31,7 +31,7 @@ const ContestUpload = () => {
         try {
             const token = localStorage.getItem("token");
 
-            const res = await  api. post(
+            const res = await  api.post(
                 "/api/v1/admin/generateContestQuestions",
                 { questionSize },
                 { headers: { Authorization: `Bearer ${token}` } }
@@ -68,7 +68,7 @@ const ContestUpload = () => {
         setLoading(true);
         try {
             const token = localStorage.getItem("token");
-            const res = await  api. post(
+            const res = await  api.post(
                 "/api/v1/admin/createContest",
                 {
                     questionSize: selectedQuestions.length,

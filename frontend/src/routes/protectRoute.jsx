@@ -26,7 +26,7 @@ const ProtectedRoute = ({ children }) => {
       }
 
       try {
-        const res = await  api. post(
+        const res = await  api.post(
           "/api/v1/user/get_User_data",
           {},
           {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
- import api from "../api";
+import api from "../../api";
 import "../../styles/questionList.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -31,7 +31,7 @@ const AdminQuestionList = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
-      const res = await  api. get(
+      const res = await  api.get(
         `/api/v1/admin/all-questions?type=${type}&search=${search}&language=${language}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -49,7 +49,7 @@ const AdminQuestionList = () => {
   const fetchLanguages = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await  api. get("/api/v1/admin/get-languages", {
+      const res = await  api.get("/api/v1/admin/get-languages", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setLanguages(res.data.data || []);
@@ -74,7 +74,7 @@ const AdminQuestionList = () => {
 
     try {
       const token = localStorage.getItem("token");
-      await  api. delete(`/api/v1/admin/delete-question/${id}?type=${type}`, {
+      await  api.delete(`/api/v1/admin/delete-question/${id}?type=${type}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setQuestions((prev) => prev.filter((q) => q._id !== id));
@@ -100,7 +100,7 @@ const AdminQuestionList = () => {
   const handleUpdate = async () => {
     try {
       const token = localStorage.getItem("token");
-      await  api. put(
+      await  api.put(
         `/api/v1/admin/edit-question/${editMode}?type=${type}`,
         editForm,
         { headers: { Authorization: `Bearer ${token}` } }

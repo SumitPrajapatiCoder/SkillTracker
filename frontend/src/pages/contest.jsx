@@ -24,7 +24,7 @@ const Contest = () => {
     const fetchContest = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await  api. get(`/api/v1/user/contest/${id}`, {
+        const res = await  api.get(`/api/v1/user/contest/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -101,7 +101,7 @@ const Contest = () => {
 
       try {
         const token = localStorage.getItem("token");
-        const res = await  api. post(
+        const res = await  api.post(
           "/api/v1/user/contestSubmit",
           {
             contestId: contest._id,

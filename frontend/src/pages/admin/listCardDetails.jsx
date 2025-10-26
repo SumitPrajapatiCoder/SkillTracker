@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
- import api from "../api";
+import api from "../../api";
 import "../../styles/listCardDetails.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -29,7 +29,7 @@ const ListCardDetails = () => {
           ? "/api/v1/admin/get-quiz-cards"
           : "/api/v1/admin/get-mock-cards";
 
-      const res = await  api. get(url, {
+      const res = await  api.get(url, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -69,7 +69,7 @@ const ListCardDetails = () => {
 
     try {
       const token = localStorage.getItem("token");
-      await  api. delete(`/api/v1/admin/delete-card/${id}?type=${type}`, {
+      await  api.delete(`/api/v1/admin/delete-card/${id}?type=${type}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCards((prev) => prev.filter((c) => c._id !== id));
@@ -93,7 +93,7 @@ const ListCardDetails = () => {
   const handleUpdate = async () => {
     try {
       const token = localStorage.getItem("token");
-      await  api. put(
+      await  api.put(
         `/api/v1/admin/update-card/${editMode}?type=${type}`,
         editForm,
         {

@@ -15,7 +15,7 @@ const MockTest = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
-      const res = await  api. get("/api/v1/user/get-mock-cards", {
+      const res = await  api.get("/api/v1/user/get-mock-cards", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMockData(res.data.data || []);

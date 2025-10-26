@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
- import api from "../api";
+import api from "../../api";
 import "../../styles/uploadQuestion.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -37,7 +37,7 @@ const AdminUpload = () => {
   const fetchLanguages = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await  api. get("/api/v1/admin/get-languages", {
+      const res = await  api.get("/api/v1/admin/get-languages", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setLanguages(res.data.data);
@@ -59,7 +59,7 @@ const AdminUpload = () => {
     }
     try {
       const token = localStorage.getItem("token");
-      await  api. post(
+      await  api.post(
         "/api/v1/admin/upload-language",
         { name: newLang.trim() },
         { headers: { Authorization: `Bearer ${token}` } }
@@ -88,7 +88,7 @@ const AdminUpload = () => {
 
       if (result.isConfirmed) {
         const token = localStorage.getItem("token");
-        await  api. delete(`/api/v1/admin/delete-language/${id}`, {
+        await  api.delete(`/api/v1/admin/delete-language/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -114,7 +114,7 @@ const AdminUpload = () => {
     try {
       setLoadingAI(true);
       const token = localStorage.getItem("token");
-      const res = await  api. post(
+      const res = await  api.post(
         "/api/v1/admin/generate-ai",
         { language, difficulty, type, count },
         { headers: { Authorization: `Bearer ${token}` } }
@@ -138,7 +138,7 @@ const AdminUpload = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      await  api. post(
+      await  api.post(
         "/api/v1/admin/upload-question",
         { type, language, difficulty, question, options, correctAnswer },
         { headers: { Authorization: `Bearer ${token}` } }
@@ -156,7 +156,7 @@ const AdminUpload = () => {
     try {
       const token = localStorage.getItem("token");
       for (const q of aiQuestions) {
-        await  api. post(
+        await  api.post(
           "/api/v1/admin/upload-question",
           {
             type,
