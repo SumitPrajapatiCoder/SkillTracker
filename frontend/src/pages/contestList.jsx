@@ -138,7 +138,7 @@ const ContestList = () => {
             <div className="contest-list-grid">
                 {currentContests.map((contest) => {
                     const status = getStatus(contest);
-                    const publishDate = new Date(contest.publishDetails.date).toLocaleString("en-IN", {
+                    const publishDate = new Date(contest.publishDetails.date).toLocaleString("en-US", {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
@@ -146,7 +146,6 @@ const ContestList = () => {
                         minute: "2-digit",
                         hour12: true,
                     });
-
 
                     return (
                         <article key={contest._id} className={`contest-list-card ${status}`}>
