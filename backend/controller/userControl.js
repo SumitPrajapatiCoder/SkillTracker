@@ -969,104 +969,6 @@ const getContestUser = async (req, res) => {
 
 
 
-// const submitContest = async (req, res) => {
-//     try {
-//         const { contestId, score, totalQuestions, playedQuestions } = req.body;
-//         const userId = req.user.id;
-
-//         const contest = await contestModel.findById(contestId).lean();
-//         if (!contest)
-//             return res.status(404).json({ success: false, message: "Contest not found" });
-
-//         const now = new Date();
-//         const publishTime = new Date(contest.publishDetails.date);
-//         const durationMinutes = contest.timeDuration;
-//         const endTime = new Date(publishTime.getTime() + durationMinutes * 60000);
-
-//         const submissionType = now >= publishTime && now <= endTime ? "valid" : "not valid";
-
-//         await userModel.findByIdAndUpdate(userId, {
-//             $push: {
-//                 contestHistory: {
-//                     contestId,
-//                     score,
-//                     totalQuestions,
-//                     playedQuestions,
-//                     date: new Date(),
-//                     submissionType,
-//                 },
-//             },
-//         });
-
-//         let message = "";
-
-//         if (submissionType === "valid") {
-//             const users = await userModel.find().lean();
-
-//             const leaderboard = [];
-
-//             users.forEach(user => {
-//                 if (!user.contestHistory || user.contestHistory.length === 0) return;
-
-//                 const validContests = user.contestHistory.filter(ch => ch.submissionType === "valid");
-//                 if (validContests.length === 0) return;
-
-//                 const totalScore = validContests.reduce((acc, ch) => acc + (ch.score || 0), 0);
-
-//                 let earliestSubmission = null;
-//                 validContests.forEach(ch => {
-//                     if (ch.date) {
-//                         if (!earliestSubmission || new Date(ch.date) < new Date(earliestSubmission)) {
-//                             earliestSubmission = ch.date;
-//                         }
-//                     }
-//                 });
-
-//                 leaderboard.push({
-//                     userId: user._id.toString(),
-//                     name: user.name || "Unknown",
-//                     totalScore,
-//                     earliestSubmission,
-//                 });
-//             });
-
-//             leaderboard.sort((a, b) => {
-//                 if (b.totalScore !== a.totalScore) return b.totalScore - a.totalScore;
-//                 if (a.earliestSubmission && b.earliestSubmission) {
-//                     return new Date(a.earliestSubmission) - new Date(b.earliestSubmission);
-//                 }
-//                 return 0;
-//             });
-
-//             const rankIndex = leaderboard.findIndex(u => u.userId === userId);
-//             const userRank = rankIndex !== -1 ? rankIndex + 1 : null;
-
-//             const totalScore = leaderboard.find(u => u.userId === userId)?.totalScore || score;
-
-//             message = `Contest ${contestId} submitted successfully! Your score: ${score}. Total score: ${totalScore}. Current rank: ${userRank}.`;
-
-//         } else {
-//             message = `Your submission for Contest ${contestId} was submitted but is not valid.`;
-//         }
-
-//         await addNotification(userId, message);
-
-//         return res.status(200).json({
-//             success: true,
-//             submissionType,
-//             score,
-//             message,
-//         });
-
-//     } catch (error) {
-//         console.error("Error submitting contest:", error);
-//         return res.status(500).json({ success: false, message: "Server error" });
-//     }
-// };
-
-
-
-
 const submitContest = async (req, res) => {
     try {
         const { contestId, score, totalQuestions, playedQuestions } = req.body;
@@ -1076,14 +978,8 @@ const submitContest = async (req, res) => {
         if (!contest)
             return res.status(404).json({ success: false, message: "Contest not found" });
 
-        // ✅ Always convert to IST before comparing
-        const getISTDate = (date = new Date()) => {
-            // 5 hours 30 minutes offset for IST
-            return new Date(date.getTime() + (5.5 * 60 * 60 * 1000));
-        };
-
-        const now = getISTDate();
-        const publishTime = getISTDate(new Date(contest.publishDetails.date));
+        const now = new Date();
+        const publishTime = new Date(contest.publishDetails.date);
         const durationMinutes = contest.timeDuration;
         const endTime = new Date(publishTime.getTime() + durationMinutes * 60000);
 
@@ -1096,7 +992,7 @@ const submitContest = async (req, res) => {
                     score,
                     totalQuestions,
                     playedQuestions,
-                    date: getISTDate(),
+                    date: new Date(),
                     submissionType,
                 },
             },
