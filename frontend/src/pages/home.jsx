@@ -50,6 +50,18 @@ const Home = () => {
             </div>
           </Link>
 
+          <Link to="/contestList">
+            <div className="feature-card">
+              <h3>Contest & Leaderboard</h3>
+              <p>
+                Take part in <strong>multi-language MCQ contests</strong> designed to test
+                your programming knowledge across different languages.
+                Track your <strong>contest performance</strong>, improve with each attempt,
+                and climb the <strong>Leaderboard</strong> to showcase your skills!
+              </p>
+            </div>
+          </Link>
+
           <Link to="/study_plane">
             <div className="feature-card">
               <h3>AI-Generated Study Plan</h3>
