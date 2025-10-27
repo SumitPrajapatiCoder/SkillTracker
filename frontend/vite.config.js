@@ -64,4 +64,5 @@ export default defineConfig({
     outDir: 'dist',
     chunkSizeWarningLimit: 3000,
   },
+  base: '/',
 });
