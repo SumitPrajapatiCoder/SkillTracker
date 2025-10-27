@@ -52,7 +52,7 @@ const Home = () => {
 
           <Link to="/contestList">
             <div className="feature-card">
-              <h3>Contest & Leaderboard</h3>
+              <h3>Contest & Leaderboard </h3>
               <p>
                 Take part in <strong>multi-language MCQ contests</strong> designed to test
                 your programming knowledge across different languages.
