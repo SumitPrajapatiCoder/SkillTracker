@@ -157,6 +157,14 @@ button:hover {
   padding: 1rem;
   margin-top: 1rem;
   border-radius: 12px;
+  transition: all 0.3s ease-in-out;
+}
+
+.lang-list h3 {
+  font-size: 1.4rem;
+  color: #1e293b;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 .lang-list ul {
@@ -169,11 +177,17 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fff;
-  padding: 0.5rem 0.75rem;
+  background: #ffffff;
+  padding: 0.75rem 1rem;
   margin-bottom: 0.5rem;
   border-radius: 8px;
   border: 1px solid #e2e8f0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lang-list li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .delete-btn {
@@ -181,13 +195,58 @@ button:hover {
   color: #dc2626;
   border: none;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  padding: 0.3rem;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .delete-btn:hover {
   color: #b91c1c;
+  transform: scale(1.1);
 }
 
+@media screen and (max-width: 768px) {
+  .lang-list {
+    padding: 0.8rem;
+  }
+
+  .lang-list h3 {
+    font-size: 1.2rem;
+  }
+
+  .lang-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .delete-btn {
+    align-self: flex-end;
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 1rem;
+    margin: 1rem;
+  }
+
+  .lang-list h3 {
+    font-size: 1.1rem;
+  }
+
+  .lang-list li {
+    font-size: 0.95rem;
+    padding: 0.6rem;
+  }
+
+  .delete-btn {
+    font-size: 1rem;
+    padding: 0.25rem;
+  }
+}
 
 .common-select {
   display: flex;
