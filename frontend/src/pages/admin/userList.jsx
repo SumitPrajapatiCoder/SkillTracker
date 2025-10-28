@@ -22,7 +22,7 @@ const AdminUserList = () => {
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 3;
+  const usersPerPage = 5;
   const navigate = useNavigate();
 
   const fetchUsers = async () => {
