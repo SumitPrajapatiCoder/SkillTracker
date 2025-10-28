@@ -72,6 +72,7 @@ const ContestList = () => {
 
                 setContests(contestData);
                 setLeaderboard(leaderboardRes.data.leaderboard || []);
+
                 if (userRankRes.data.success && userRankRes.data.userRank) {
                     setUserRank(userRankRes.data.userRank);
                 }
@@ -85,6 +86,35 @@ const ContestList = () => {
 
         fetchData();
     }, []);
+
+
+
+    useEffect(() => {
+        if (contests.length === 0) return;
+
+        const interval = setInterval(() => {
+            const now = new Date();
+
+            const matchFound = contests.some((contest) => {
+                const publishTime = new Date(contest.publishDetails.date);
+
+
+                const diff = Math.abs(now.getTime() - publishTime.getTime());
+                return diff <= 10000;
+            });
+
+            if (matchFound) {
+                console.log("Contest just went live — refreshing the page!");
+                clearInterval(interval);
+                window.location.reload();
+            }
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [contests]);
+
+
+    
 
     const getStatus = (contest) => {
         const now = new Date();
@@ -138,33 +168,14 @@ const ContestList = () => {
             <div className="contest-list-grid">
                 {currentContests.map((contest) => {
                     const status = getStatus(contest);
-                    // const publishDate = new Date(contest.publishDetails.date).toLocaleString("en-US", {
-                    //     year: "numeric",
-                    //     month: "short",
-                    //     day: "numeric",
-                    //     hour: "numeric",
-                    //     minute: "2-digit",
-                    //     hour12: true,
-                    // });
-
-
-                    
-                    const d = new Date(contest.publishDetails.date);
-                    const offset = d.getTimezoneOffset();
-                    const corrected =
-                        contest.publishDetails.date.endsWith("Z")
-                            ? d
-                            : new Date(d.getTime() - offset * 60000);
-
-                    const publishDate = corrected.toLocaleString("en-IN", {
+                    const publishDate = new Date(contest.publishDetails.date).toLocaleString("en-US", {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
-                        hour: "2-digit",
+                        hour: "numeric",
                         minute: "2-digit",
                         hour12: true,
                     });
-
 
                     return (
                         <article key={contest._id} className={`contest-list-card ${status}`}>
