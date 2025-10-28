@@ -94,31 +94,44 @@ const ContestList = () => {
     }, []);
 
 
+    
     useEffect(() => {
         if (contests.length === 0) return;
 
         const interval = setInterval(() => {
             const now = new Date();
 
-            const updatedContests = contests.filter((contest) => {
+            contests.forEach((contest) => {
                 const start = new Date(contest.publishDetails.date);
                 const end = new Date(start.getTime() + contest.timeDuration * 60000);
-                return now >= start && now <= end;
-            });
 
-            if (updatedContests.length > 0) {
-                const contestId = updatedContests[0]._id;
-                const refreshedFlag = localStorage.getItem(`contestRefreshed_${contestId}`);
-                if (!refreshedFlag) {
-                    localStorage.setItem(`contestRefreshed_${contestId}`, "true");
+                const liveKey = `contestLive_${contest._id}`;
+                const refreshedKey = `contestRefreshed_${contest._id}`;
+
+                const isLive = now >= start && now <= end;
+
+                if (isLive && !localStorage.getItem(liveKey)) {
+                    localStorage.setItem(liveKey, "true");
+                    localStorage.removeItem(refreshedKey);
                     clearInterval(interval);
                     window.location.reload();
                 }
-            }
-        }, 5000); 
 
+                if (now > end && localStorage.getItem(liveKey)) {
+                    localStorage.removeItem(liveKey);
+
+                    const alreadyRefreshed = localStorage.getItem(refreshedKey);
+                    if (!alreadyRefreshed) {
+                        localStorage.setItem(refreshedKey, "true");
+                        clearInterval(interval);
+                        window.location.reload();
+                    }
+                }
+            });
+        }, 5000); 
         return () => clearInterval(interval);
     }, [contests]);
+
 
 
     const getStatus = (contest) => {
@@ -130,6 +143,7 @@ const ContestList = () => {
         if (now >= start && now <= end) return "live";
         return "past";
     };
+
 
     // const handleContestClick = (contest) => {
     //     const status = getStatus(contest);
