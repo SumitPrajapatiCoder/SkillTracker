@@ -94,26 +94,26 @@ const ContestList = () => {
         const interval = setInterval(() => {
             const now = new Date();
 
-            const matchContest = contests.find((contest) => {
-                const publishTime = new Date(contest.publishDetails.date);
-                const diff = Math.abs(now.getTime() - publishTime.getTime());
-                return diff <= 10000; 
+            const updatedContests = contests.filter((contest) => {
+                const start = new Date(contest.publishDetails.date);
+                const end = new Date(start.getTime() + contest.timeDuration * 60000);
+                return now >= start && now <= end;
             });
 
-            if (matchContest) {
-                const contestId = matchContest._id;
+            if (updatedContests.length > 0) {
+                const contestId = updatedContests[0]._id;
                 const refreshedFlag = localStorage.getItem(`contestRefreshed_${contestId}`);
-
                 if (!refreshedFlag) {
                     localStorage.setItem(`contestRefreshed_${contestId}`, "true");
                     clearInterval(interval);
                     window.location.reload();
                 }
             }
-        }, 1000);
+        }, 5000); 
 
         return () => clearInterval(interval);
     }, [contests]);
+
 
 
 
