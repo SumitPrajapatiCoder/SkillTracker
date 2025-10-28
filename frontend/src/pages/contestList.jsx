@@ -144,15 +144,7 @@ const ContestList = () => {
         return "past";
     };
 
-
-    // const handleContestClick = (contest) => {
-    //     const status = getStatus(contest);
-    //     if (status === "upcoming") return; 
-    //     navigate(`/contest/${contest._id}`);
-    // };
-
-
-
+    
     const handleContestClick = (contest) => {
         const status = getStatus(contest);
         if (status === "upcoming") return;
@@ -201,7 +193,6 @@ const ContestList = () => {
         }
         navigate(`/contest/${contest._id}`);
     };
-
 
 
     const totalPages = Math.ceil(contests.length / contestsPerPage);

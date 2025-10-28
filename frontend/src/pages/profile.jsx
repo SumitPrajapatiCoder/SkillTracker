@@ -531,6 +531,12 @@ const Profile = () => {
                           `Score: ${c.score}/${c.totalQuestions}`,
                           `Percentage: ${c.percentage}%`,
                           `Date: ${new Date(c.date).toLocaleDateString("en-GB")}`,
+                          `Time: ${new Date(c.date).toLocaleTimeString("en-GB",
+                            {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              hour12: true
+                            })}`
                         ];
                       },
                     },
