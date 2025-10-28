@@ -148,10 +148,10 @@ const ContestList = () => {
                     // });
 
 
-                    const utcDate = new Date(contest.publishDetails.date);
-                    const localDate = new Date(utcDate.getTime() - utcDate.getTimezoneOffset() * 60000);
-
-                    const publishDate = localDate.toLocaleString("en-IN", {
+                    
+                    const d = new Date(contest.publishDetails.date);
+                    const corrected = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+                    const publishDate = corrected.toLocaleString("en-IN", {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
@@ -159,7 +159,6 @@ const ContestList = () => {
                         minute: "2-digit",
                         hour12: true,
                     });
-
 
                     return (
                         <article key={contest._id} className={`contest-list-card ${status}`}>

@@ -95,22 +95,7 @@ const ContestView = () => {
                         <p className="contest-no"><strong>Contest No. {contest._id.slice(-5)}</strong></p>
                         <p className="question-size"><strong>Question Size:</strong> {contest.questionSize}</p>
                         <p className="time-duration"><strong>Time Duration:</strong> {contest.timeDuration} minutes</p>
-
-                        {/* <p className="publish-date"><strong>Published Date & Time:</strong> {contest.publishDetails.formatted}</p> */}
-                        
-                        <p className="publish-date">
-                            <strong>Published Date & Time:</strong>{" "}
-                            {new Date(contest.publishDetails.date)
-                                .toLocaleString("en-IN", {
-                                    year: "numeric",
-                                    month: "short",
-                                    day: "numeric",
-                                    hour: "2-digit",
-                                    minute: "2-digit",
-                                    hour12: true,
-                                })}
-                        </p>
-
+                        <p className="publish-date"><strong>Published Date & Time:</strong> {contest.publishDetails.formatted}</p>
                     </div>
 
                     <h3>Questions:</h3>
