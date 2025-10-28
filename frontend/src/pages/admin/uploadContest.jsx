@@ -59,6 +59,41 @@ const ContestUpload = () => {
         setSelectedQuestions(updated.filter((q) => q.selected));
     };
 
+    // const handleUpload = async () => {
+    //     if (selectedQuestions.length === 0) {
+    //         toast.error("No questions selected to upload");
+    //         return;
+    //     }
+
+    //     setLoading(true);
+    //     try {
+    //         const token = localStorage.getItem("token");
+    //         const res = await  api.post(
+    //             "/admin/createContest",
+    //             {
+    //                 questionSize: selectedQuestions.length,
+    //                 timeDuration,
+    //                 publishDateTime,
+    //                 questions: selectedQuestions,
+    //             },
+    //             { headers: { Authorization: `Bearer ${token}` } }
+    //         );
+
+    //         toast.success(`Contest uploaded successfully! ID: ${res.data.contestId}`);
+    //         setQuestionSize("");
+    //         setTimeDuration("");
+    //         setPublishDateTime("");
+    //         setGeneratedQuestions([]);
+    //         setSelectedQuestions([]);
+    //     } catch (error) {
+    //         console.error(error);
+    //         toast.error(error.response?.data?.message || "Error uploading contest");
+    //     }
+    //     setLoading(false);
+    // };
+
+
+
     const handleUpload = async () => {
         if (selectedQuestions.length === 0) {
             toast.error("No questions selected to upload");
@@ -68,12 +103,16 @@ const ContestUpload = () => {
         setLoading(true);
         try {
             const token = localStorage.getItem("token");
-            const res = await  api.post(
+
+            const localDate = new Date(publishDateTime);
+            const utcDate = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000);
+
+            const res = await api.post(
                 "/admin/createContest",
                 {
                     questionSize: selectedQuestions.length,
                     timeDuration,
-                    publishDateTime,
+                    publishDateTime: utcDate.toISOString(),
                     questions: selectedQuestions,
                 },
                 { headers: { Authorization: `Bearer ${token}` } }
@@ -91,6 +130,7 @@ const ContestUpload = () => {
         }
         setLoading(false);
     };
+
 
     const handleClear = async () => {
         const result = await MySwal.fire({

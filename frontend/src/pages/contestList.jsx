@@ -138,14 +138,28 @@ const ContestList = () => {
             <div className="contest-list-grid">
                 {currentContests.map((contest) => {
                     const status = getStatus(contest);
-                    const publishDate = new Date(contest.publishDetails.date).toLocaleString("en-US", {
+                    // const publishDate = new Date(contest.publishDetails.date).toLocaleString("en-US", {
+                    //     year: "numeric",
+                    //     month: "short",
+                    //     day: "numeric",
+                    //     hour: "numeric",
+                    //     minute: "2-digit",
+                    //     hour12: true,
+                    // });
+
+
+                    const utcDate = new Date(contest.publishDetails.date);
+                    const localDate = new Date(utcDate.getTime() - utcDate.getTimezoneOffset() * 60000);
+
+                    const publishDate = localDate.toLocaleString("en-IN", {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
-                        hour: "numeric",
+                        hour: "2-digit",
                         minute: "2-digit",
                         hour12: true,
                     });
+
 
                     return (
                         <article key={contest._id} className={`contest-list-card ${status}`}>
