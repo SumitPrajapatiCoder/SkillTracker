@@ -172,33 +172,33 @@ const ContestList = () => {
         }
 
         if (status === "live") {
-            localStorage.setItem(contestKey, "true");
-
             const start = new Date(contest.publishDetails.date);
             const end = new Date(start.getTime() + contest.timeDuration * 60000);
             const timeLeft = end - now;
 
-
-            if (timeLeft > 0) {
-                setTimeout(() => {
-                    localStorage.removeItem(contestKey);
-                    console.log(`Contest ${contest._id} flag cleared after live duration.`);
-                }, timeLeft);
-            }
-
             MySwal.fire({
                 icon: "success",
                 title: "Contest Started!",
-                text: "Good luck! The contest is live now.",
+                text: "Good luck! The contest is live now. Would you like to start?",
+                showCancelButton: true,
                 confirmButtonColor: "#28a745",
+                cancelButtonColor: "#d33",
                 confirmButtonText: "Start Contest",
-            }).then(() => {
-                navigate(`/contest/${contest._id}`);
-            });
+                cancelButtonText: "Not Now",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.setItem(contestKey, "true");
+                    navigate(`/contest/${contest._id}`);
 
+                    if (timeLeft > 0) {
+                        setTimeout(() => {
+                            localStorage.removeItem(contestKey);
+                        }, timeLeft);
+                    }
+                }
+            });
             return;
         }
-
         navigate(`/contest/${contest._id}`);
     };
 
