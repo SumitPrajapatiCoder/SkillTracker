@@ -200,27 +200,6 @@ const ContestList = () => {
         }
 
         navigate(`/contest/${contest._id}`);
-
-        if (status === "past") {
-            MySwal.fire({
-                icon: "info",
-                title: "Past Contest",
-                html: `
-            <p>This past contest helps you understand the complexity and structure of previous problems.</p>
-            <p style="margin-top: 10px;">Would you like to replay it for practice?</p>
-        `,
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, Replay",
-                cancelButtonText: "No, Cancel",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    navigate(`/contest/${contest._id}`);
-                }
-            });
-            return;
-        }
     };
 
 
