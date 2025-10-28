@@ -142,6 +142,17 @@ const ContestUpload = () => {
                     />
                 </div>
 
+                {/* <div className="form-group">
+                    <label>Publish Date & Time:</label>
+                    <input
+                        type="datetime-local"
+                        value={publishDateTime}
+                        onChange={(e) => setPublishDateTime(e.target.value)}
+                        className="form-input"
+                    />
+                </div> */}
+
+
                 <div className="form-group">
                     <label>Publish Date & Time:</label>
                     <input
@@ -150,7 +161,26 @@ const ContestUpload = () => {
                         onChange={(e) => setPublishDateTime(e.target.value)}
                         className="form-input"
                     />
+
+                    {publishDateTime && (
+                        <p style={{ marginTop: "8px", color: "#0f9d58", fontWeight: "500" }}>
+                            After +5:30 hr (UTC→IST):{" "}
+                            <strong>
+                                {new Date(
+                                    new Date(publishDateTime).getTime() + 5.5 * 60 * 60 * 1000
+                                ).toLocaleString("en-IN", {
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    hour12: true,
+                                })}
+                            </strong>
+                        </p>
+                    )}
                 </div>
+
 
                 <button
                     type="button"
