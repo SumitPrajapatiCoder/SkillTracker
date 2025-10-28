@@ -150,7 +150,12 @@ const ContestList = () => {
 
                     
                     const d = new Date(contest.publishDetails.date);
-                    const corrected = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+                    const offset = d.getTimezoneOffset();
+                    const corrected =
+                        contest.publishDetails.date.endsWith("Z")
+                            ? d
+                            : new Date(d.getTime() - offset * 60000);
+
                     const publishDate = corrected.toLocaleString("en-IN", {
                         year: "numeric",
                         month: "short",
@@ -159,6 +164,7 @@ const ContestList = () => {
                         minute: "2-digit",
                         hour12: true,
                     });
+
 
                     return (
                         <article key={contest._id} className={`contest-list-card ${status}`}>
