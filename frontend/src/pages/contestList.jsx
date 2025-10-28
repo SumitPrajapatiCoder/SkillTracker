@@ -88,25 +88,27 @@ const ContestList = () => {
     }, []);
 
 
-
     useEffect(() => {
         if (contests.length === 0) return;
 
         const interval = setInterval(() => {
             const now = new Date();
 
-            const matchFound = contests.some((contest) => {
+            const matchContest = contests.find((contest) => {
                 const publishTime = new Date(contest.publishDetails.date);
-
-
                 const diff = Math.abs(now.getTime() - publishTime.getTime());
-                return diff <= 10000;
+                return diff <= 10000; 
             });
 
-            if (matchFound) {
-                console.log("Contest just went live — refreshing the page!");
-                clearInterval(interval);
-                window.location.reload();
+            if (matchContest) {
+                const contestId = matchContest._id;
+                const refreshedFlag = localStorage.getItem(`contestRefreshed_${contestId}`);
+
+                if (!refreshedFlag) {
+                    localStorage.setItem(`contestRefreshed_${contestId}`, "true");
+                    clearInterval(interval);
+                    window.location.reload();
+                }
             }
         }, 1000);
 
@@ -114,7 +116,8 @@ const ContestList = () => {
     }, [contests]);
 
 
-    
+
+
 
     const getStatus = (contest) => {
         const now = new Date();
