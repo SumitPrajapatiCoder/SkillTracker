@@ -11,6 +11,12 @@ import {
 } from "react-icons/fa";
 import "../styles/contestList.css";
 
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const MySwal = withReactContent(Swal);
+
+
 const ContestList = () => {
     const [languages, setLanguages] = useState([]);
     const [contests, setContests] = useState([]);
@@ -115,10 +121,6 @@ const ContestList = () => {
     }, [contests]);
 
 
-
-
-
-
     const getStatus = (contest) => {
         const now = new Date();
         const start = new Date(contest.publishDetails.date);
@@ -129,11 +131,85 @@ const ContestList = () => {
         return "past";
     };
 
+    // const handleContestClick = (contest) => {
+    //     const status = getStatus(contest);
+    //     if (status === "upcoming") return; 
+    //     navigate(`/contest/${contest._id}`);
+    // };
+
+
+
     const handleContestClick = (contest) => {
         const status = getStatus(contest);
-        if (status === "upcoming") return; 
+        if (status === "upcoming") return;
+
+        const contestKey = `contestGiven_${contest._id}`;
+        const now = new Date();
+
+        if (localStorage.getItem(contestKey) === "true") {
+            MySwal.fire({
+                icon: "info",
+                title: "Contest Already Attempted",
+                text: "You have already attempted this live contest. You can only play once during the live duration!",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "OK",
+            });
+            return;
+        }
+
+        if (status === "live") {
+            localStorage.setItem(contestKey, "true");
+
+            const start = new Date(contest.publishDetails.date);
+            const end = new Date(start.getTime() + contest.timeDuration * 60000);
+            const timeLeft = end - now;
+
+
+            if (timeLeft > 0) {
+                setTimeout(() => {
+                    localStorage.removeItem(contestKey);
+                    console.log(`Contest ${contest._id} flag cleared after live duration.`);
+                }, timeLeft);
+            }
+
+            MySwal.fire({
+                icon: "success",
+                title: "Contest Started!",
+                text: "Good luck! The contest is live now.",
+                confirmButtonColor: "#28a745",
+                confirmButtonText: "Start Contest",
+            }).then(() => {
+                navigate(`/contest/${contest._id}`);
+            });
+
+            return;
+        }
+
         navigate(`/contest/${contest._id}`);
+
+        if (status === "past") {
+            MySwal.fire({
+                icon: "info",
+                title: "Past Contest",
+                html: `
+            <p>This past contest helps you understand the complexity and structure of previous problems.</p>
+            <p style="margin-top: 10px;">Would you like to replay it for practice?</p>
+        `,
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Replay",
+                cancelButtonText: "No, Cancel",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate(`/contest/${contest._id}`);
+                }
+            });
+            return;
+        }
     };
+
+
 
     const totalPages = Math.ceil(contests.length / contestsPerPage);
     const indexOfLast = currentPage * contestsPerPage;
