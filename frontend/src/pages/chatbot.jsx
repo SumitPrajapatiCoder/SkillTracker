@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
- import api from "../api";
+import api from "../api";
 import hljs from "highlight.js";
 import "highlight.js/styles/github-dark.css";
 import { toast } from "react-toastify";
@@ -263,8 +263,17 @@ function Chatbot() {
               </span>
             )}
             <small>
-              {msg.time ? new Date(msg.time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : ""}
-            </small>
+  {msg.time
+    ? new Date(msg.time).toLocaleString("en-IN", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      })
+    : ""}
+</small>
           </div>
         ))}
         {loading && <div className="chat-bubble from-bot">Typing...</div>}
