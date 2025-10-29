@@ -68,17 +68,20 @@ const ContestUpload = () => {
         setLoading(true);
         try {
             const token = localStorage.getItem("token");
-            const res = await  api.post(
-                "/admin/createContest",
-                {
-                    questionSize: selectedQuestions.length,
-                    timeDuration,
-                    publishDateTime,
-                    questions: selectedQuestions,
-                },
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+             // ✅ Convert local (IST) → UTC−5:30
+const actualTime = new Date(publishDateTime);
+const adjustedTime = new Date(actualTime.getTime() - 5.5 * 60 * 60 * 1000);
 
+const res = await api.post(
+    "/admin/createContest",
+    {
+        questionSize: selectedQuestions.length,
+        timeDuration,
+        publishDateTime: adjustedTime, // store UTC−5:30
+        questions: selectedQuestions,
+    },
+    { headers: { Authorization: `Bearer ${token}` } }
+);
             toast.success(`Contest uploaded successfully! ID: ${res.data.contestId}`);
             setQuestionSize("");
             setTimeDuration("");
