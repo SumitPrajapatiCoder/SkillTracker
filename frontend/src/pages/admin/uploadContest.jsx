@@ -165,23 +165,31 @@ const res = await api.post(
                         className="form-input"
                     />
 
-                    {publishDateTime && (
-                        <p style={{ marginTop: "8px", color: "#0f9d58", fontWeight: "500" }}>
-                            After +5:30 hr (UTC→IST):{" "}
-                            <strong>
-                                {new Date(
-                                    new Date(publishDateTime).getTime() + 5.5 * 60 * 60 * 1000
-                                ).toLocaleString("en-IN", {
-                                    year: "numeric",
-                                    month: "short",
-                                    day: "numeric",
-                                    hour: "2-digit",
-                                    minute: "2-digit",
-                                    hour12: true,
-                                })}
-                            </strong>
-                        </p>
-                    )}
+                     {publishDateTime && (
+  <div style={{ marginTop: "8px" }}>
+    <p style={{ color: "#0f9d58", fontWeight: "500" }}>
+      ✅ Actual Time (IST):{" "}
+      <strong>
+        {new Date(publishDateTime).toLocaleString("en-IN", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        })}
+      </strong>
+    </p>
+    <p style={{ color: "#fbbc04", fontWeight: "500" }}>
+      🌍 Stored as UTC−5:30:{" "}
+      <strong>
+        {new Date(
+          new Date(publishDateTime).getTime() - 5.5 * 60 * 60 * 1000
+        ).toUTCString()}
+      </strong>
+    </p>
+  </div>
+)}
                 </div>
 
 
