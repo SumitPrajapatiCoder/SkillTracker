@@ -68,20 +68,17 @@ const ContestUpload = () => {
         setLoading(true);
         try {
             const token = localStorage.getItem("token");
-             // ✅ Convert local (IST) → UTC−5:30
-const actualTime = new Date(publishDateTime);
-const adjustedTime = new Date(actualTime.getTime() - 5.5 * 60 * 60 * 1000);
+    const res = await  api.post(
+                "/admin/createContest",
+                {
+                    questionSize: selectedQuestions.length,
+                    timeDuration,
+                    publishDateTime,
+                    questions: selectedQuestions,
+                },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
 
-const res = await api.post(
-    "/admin/createContest",
-    {
-        questionSize: selectedQuestions.length,
-        timeDuration,
-        publishDateTime: adjustedTime, // store UTC−5:30
-        questions: selectedQuestions,
-    },
-    { headers: { Authorization: `Bearer ${token}` } }
-);
             toast.success(`Contest uploaded successfully! ID: ${res.data.contestId}`);
             setQuestionSize("");
             setTimeDuration("");
@@ -166,30 +163,22 @@ const res = await api.post(
                     />
 
                      {publishDateTime && (
-  <div style={{ marginTop: "8px" }}>
-    <p style={{ color: "#0f9d58", fontWeight: "500" }}>
-      ✅ Actual Time (IST):{" "}
-      <strong>
-        {new Date(publishDateTime).toLocaleString("en-IN", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: true,
-        })}
-      </strong>
-    </p>
-    <p style={{ color: "#fbbc04", fontWeight: "500" }}>
-      🌍 Stored as UTC−5:30:{" "}
-      <strong>
-        {new Date(
-          new Date(publishDateTime).getTime() - 5.5 * 60 * 60 * 1000
-        ).toUTCString()}
-      </strong>
-    </p>
-  </div>
-)}
+                        <p style={{ marginTop: "8px", color: "#0f9d58", fontWeight: "500" }}>
+                            After +5:30 hr (UTC→IST):{" "}
+                            <strong>
+                                {new Date(
+                                    new Date(publishDateTime).getTime() + 5.5 * 60 * 60 * 1000
+                                ).toLocaleString("en-IN", {
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    hour12: true,
+                                })}
+                            </strong>
+                        </p>
+                    )}
                 </div>
 
 
