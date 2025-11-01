@@ -209,6 +209,27 @@ function Chatbot() {
     }
   };
   
+  // const handleBubbleClick = (msg, idx) => {
+  //   if (speakingRef.current !== null) speechSynthesis.cancel();
+
+  //   if (activeSoundIdx === idx) {
+  //     speakingRef.current = null;
+  //     setActiveSoundIdx(null);
+  //     return;
+  //   }
+
+  //   const utterance = new SpeechSynthesisUtterance(msg.text);
+  //   utterance.onend = () => {
+  //     speakingRef.current = null;
+  //     setActiveSoundIdx(null);
+  //   };
+
+  //   speechSynthesis.speak(utterance);
+  //   speakingRef.current = idx;
+  //   setActiveSoundIdx(idx);
+  // };
+
+
   const handleBubbleClick = (msg, idx) => {
     if (speakingRef.current !== null) speechSynthesis.cancel();
 
@@ -218,7 +239,17 @@ function Chatbot() {
       return;
     }
 
-    const utterance = new SpeechSynthesisUtterance(msg.text);
+    let plainText = msg.text;
+    if (msg.role === "bot") {
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = msg.text;
+      plainText = tempDiv.innerText;
+    }
+
+
+    const utterance = new SpeechSynthesisUtterance(plainText);
+    utterance.rate = 1;
+    utterance.pitch = 1;
     utterance.onend = () => {
       speakingRef.current = null;
       setActiveSoundIdx(null);
@@ -228,6 +259,8 @@ function Chatbot() {
     speakingRef.current = idx;
     setActiveSoundIdx(idx);
   };
+
+
 
   return (
     <div className={`chatbot-container ${darkMode ? "dark-mode" : ""}`}>
@@ -243,7 +276,7 @@ function Chatbot() {
         </div>
       </div>
 
-      <div className="chat-window">
+      {/* <div className="chat-window">
         {messages.map((msg, idx) => (
           <div
             key={idx}
@@ -263,6 +296,7 @@ function Chatbot() {
               </span>
             )}
             <small>
+<<<<<<< HEAD
   {msg.time
     ? new Date(msg.time).toLocaleString("en-IN", {
         year: "numeric",
@@ -274,11 +308,83 @@ function Chatbot() {
       })
     : ""}
 </small>
+=======
+              {msg.time
+                ? new Date(msg.time).toLocaleString("en-IN", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                })
+                : ""}
+            </small>
+>>>>>>> ba20e27 (Add Search Function)
           </div>
         ))}
         {loading && <div className="chat-bubble from-bot">Typing...</div>}
         <div ref={chatEndRef}></div>
+      </div> */}
+
+
+
+<div className="chat-window">
+        {messages.map((msg, idx) => (
+          <div
+            key={idx}
+            className={`chat-bubble ${msg.role === "user" ? "from-user" : "from-bot"} ${activeSoundIdx === idx ? "active-sound" : ""
+              }`}
+            onClick={() => handleBubbleClick(msg, idx)}
+          >
+            <strong>{msg.role === "user" ? user?.username || "You" : "Gemini"}</strong>
+
+            {msg.role === "bot" ? (
+              <iframe
+                srcDoc={msg.text}
+                sandbox="allow-same-origin"
+                className="bot-iframe"
+                title={`bot-${idx}`}
+                onLoad={(e) => {
+                  const iframe = e.target;
+                  try {
+                    iframe.style.height =
+                      iframe.contentWindow.document.body.scrollHeight + "px";
+                  } catch (err) {
+                    console.error("Iframe resize failed:", err);
+                  }
+                }}
+              ></iframe>
+            ) : (
+              <div className="bubble-content">{msg.text}</div>
+            )}
+
+            {activeSoundIdx === idx && (
+              <span className="volume-icon">
+                <FaVolumeUp />
+              </span>
+            )}
+
+            <small>
+              {msg.time
+                ? new Date(msg.time).toLocaleString("en-IN", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                })
+                : ""}
+            </small>
+          </div>
+        ))}
+
+
+        {loading && <div className="chat-bubble from-bot">Typing...</div>}
+        <div ref={chatEndRef}></div>
       </div>
+
 
       <div className="input-row">
         <button onClick={handleMicClick} className="btn-mic">

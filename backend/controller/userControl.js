@@ -114,7 +114,7 @@ const verifyPasswordController = async (req, res) => {
         if (!isMatch) {
             return res.status(400).send({ success: false, message: "Current password is incorrect" });
         }
-    
+
         await addNotification(userId, "Password Verified Successfully !!")
         res.status(200).send({ success: true, message: "Password verified" });
     } catch (error) {
@@ -223,7 +223,7 @@ const deleteProfileImageController = async (req, res) => {
         if (user.profileImage && user.profileImage.includes("cloudinary.com")) {
             try {
                 const parts = user.profileImage.split("/");
-                const fileName = parts[parts.length - 1].split(".")[0]; 
+                const fileName = parts[parts.length - 1].split(".")[0];
                 await cloudinary.uploader.destroy(`user_profiles/${fileName}`);
             } catch (err) {
                 console.warn("Failed to delete old image from Cloudinary:", err.message);
@@ -261,7 +261,7 @@ const saveQuizResult = async (req, res) => {
             language,
             correct,
             total,
-            playedQuestions, 
+            playedQuestions,
         });
 
         await user.save();
@@ -331,7 +331,7 @@ const getMockStatus = async (req, res) => {
             (c) => c.language === language && c.completed === true
         );
 
-        const disabled = !!entry; 
+        const disabled = !!entry;
 
         res.status(200).json({ success: true, disable: disabled, date: entry ? entry.date : null });
     } catch (err) {
@@ -423,7 +423,7 @@ Goal: Produce a **fully formatted, mentor-style HTML study plan** for ${lang} th
             }
         }
         await user.save();
-        
+
         return res.status(200).json({
             success: true,
             studyPlansByLanguage: Object.fromEntries(user.studyPlans),
@@ -445,7 +445,7 @@ const getStudyPlans = async (req, res) => {
     try {
         const userId = req.userId;
         const user = await userModel.findById(userId).select("studyPlans");
-        
+
         if (!user) return res.status(404).json({ success: false, message: "User not found" });
 
         return res.status(200).json({ success: true, studyPlansByLanguage: user.studyPlans || {} });
@@ -618,14 +618,14 @@ const saveRoadmap = async (req, res) => {
 
 const getUserProgress = async (req, res) => {
     try {
-        const userId = req.userId; 
+        const userId = req.userId;
         const user = await userModel.findById(userId).select("quizHistory");
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
-       
+
         const progress = {};
         user.quizHistory.forEach(entry => {
             if (!progress[entry.language]) {
@@ -643,40 +643,40 @@ const getUserProgress = async (req, res) => {
 };
 
 
- const getLanguages = async (req, res) => {
-  try {
-    const langs = await languageModel.find().sort({ name: 1 });
-    res.status(200).send({ success: true, data: langs });
-  } catch (error) {
-    console.error("Get Languages Error:", error);
-    res.status(500).send({ success: false, message: "Failed to fetch languages" });
-  }
+const getLanguages = async (req, res) => {
+    try {
+        const langs = await languageModel.find().sort({ name: 1 });
+        res.status(200).send({ success: true, data: langs });
+    } catch (error) {
+        console.error("Get Languages Error:", error);
+        res.status(500).send({ success: false, message: "Failed to fetch languages" });
+    }
 };
 
 
 const getQuizCardDetails = async (req, res) => {
-  try {
-    const quizCards = await quizCardModel.find().sort({ createdAt: -1 });
-    return res.status(200).json({ success: true, data: quizCards });
-  } catch (error) {
-    console.error("Get Quiz Cards Error:", error);
-    return res.status(500).json({
-      error: "Failed to fetch quiz cards",
-      details: error.message,
-    });
-  }
+    try {
+        const quizCards = await quizCardModel.find().sort({ createdAt: -1 });
+        return res.status(200).json({ success: true, data: quizCards });
+    } catch (error) {
+        console.error("Get Quiz Cards Error:", error);
+        return res.status(500).json({
+            error: "Failed to fetch quiz cards",
+            details: error.message,
+        });
+    }
 };
 
 const getMockCardDetails = async (req, res) => {
-  try {
-    const mockCards = await mockCardModel.find().sort({ createdAt: -1 });
-    return res.status(200).json({ success: true, data: mockCards });
-  } catch (error) {
-    return res.status(500).json({
-      error: "Failed to fetch mock cards",
-      details: error.message,
-    });
-  }
+    try {
+        const mockCards = await mockCardModel.find().sort({ createdAt: -1 });
+        return res.status(200).json({ success: true, data: mockCards });
+    } catch (error) {
+        return res.status(500).json({
+            error: "Failed to fetch mock cards",
+            details: error.message,
+        });
+    }
 };
 
 
@@ -735,46 +735,34 @@ const chatbotController = async (req, res) => {
 
         let botResponse = "";
 
+
         if (isAboutSite) {
-            botResponse = `Welcome to **SkillTracker**, an **AI-powered learning platform** built to help you master programming in a structured and personalized way!   
-
-Here’s what **SkillTracker** offers:  
-
-- **Interactive Quizzes & Mock Tests:** Practice programming with topic-wise quizzes and mock tests for languages like **Java**, **C**, and **C++**.  
-- **Certificates:** After completing mock tests, earn certificates to showcase your skills and progress.  
-- **AI-Powered Study Plans & Roadmaps:** Based on your quiz performance and chosen language, SkillTracker automatically generates **personalized study plans and learning roadmaps** to guide your journey.  
-- **Built-in AI Chatbot:** Chat with our integrated AI assistant to solve coding problems, clear doubts, or get quick explanations.  
-- **User Progress Tracking:** View your detailed progress, check quiz history, and track which mocks are completed or pending.  
-
-**Technology Stack:**  
-- **Frontend:** HTML, CSS, React.js (Vite)  
-- **Backend:** Node.js, Express.js, JavaScript  
-- **Database:** MongoDB  
-
-In short, **SkillTracker** combines AI-driven learning, progress tracking, and interactive practice to make coding education smarter, personalized, and results-driven. `;
-        
-} else {
-
+            botResponse = `
+  <div style="font-family:Segoe UI; color:#333; line-height:1.6;">
+    <h3 style="color:#2b7cff;">Welcome to <b>SkillTracker</b></h3>
+    <p><b>SkillTracker</b> is an <b>AI-powered learning platform</b> designed to help you master programming with personalized tools.</p>
+    <ul>
+      <li>Interactive Quizzes & Mock Tests</li>
+      <li>Certificates for full marks achievers</li>
+      <li>AI study plans & learning roadmaps</li>
+      <li>Progress tracking & performance analytics</li>
+    </ul>
+  </div>`;
+        } else {
             const formattedPrompt = `
-You are a professional assistant. 
-This is the conversation so far:
+You are a helpful assistant. Respond in HTML+CSS structure for a chatbot.
+Keep formatting simple (div, p, ul, b, etc.).
+Avoid <html>, <body> tags.
+No external CSS or JS.
+Conversation so far:
 ${conversationContext}
 
-Now the user says: "${userMessage}"
-
-Respond in a friendly, readable, and engaging way, like ChatGPT would. 
-- Use **bold** for important terms
-- Use short paragraimport StudyPlan from './../../frontend/src/pages/study_plane';
-phs for clarity
-- Use bullet points or numbered lists
-- Avoid markdown headings like ###
-- Make it conversational and professional
-- Keep it suitable for direct chat display (no raw markdown)
+User says: "${userMessage}"
 `;
 
             const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
             const result = await model.generateContent([{ text: formattedPrompt }]);
-            botResponse = result?.response?.text() || "No response from AI.";
+            botResponse = result?.response?.text() || "<p>No response from AI.</p>";
         }
 
         await userModel.findByIdAndUpdate(userId, {
@@ -841,7 +829,7 @@ const clearChatHistory = async (req, res) => {
 
 
 
-const addNotification = async (userId,message) => {
+const addNotification = async (userId, message) => {
     try {
         await userModel.findByIdAndUpdate(userId, {
             $push: { notifications: { message } },
@@ -890,7 +878,7 @@ const markAsRead = async (req, res) => {
 
 const deleteNotification = async (req, res) => {
     try {
-        const { notificationId } = req.params; 
+        const { notificationId } = req.params;
         const userId = req.userId;
 
         const result = await userModel.updateOne(
@@ -1084,7 +1072,7 @@ const progressContestByUser = async (req, res) => {
             const percentage = ((contest.score / totalQ) * 100).toFixed(2);
 
             return {
-                contestId: contest.contestId,   
+                contestId: contest.contestId,
                 score: contest.score,
                 totalQuestions: totalQ,
                 percentage: Number(percentage),
@@ -1225,9 +1213,9 @@ const getAllContests = async (req, res) => {
 module.exports = {
     loginController, registerController, getUserInfo, updateProfileController, deleteProfileImageController,
     uploadProfileImageController, chatbotController, getChatHistory, clearChatHistory, getGlobalLeaderboard,
-    getStudyPlans,saveStudyPlan,getRoadmaps,saveRoadmap,getUserProgress,getLanguages,getCompletedMocks,
-    saveQuizResult, getMockStatus, saveMockResult,generateStudyPlan,generateRoadMap,
-    getMockCardDetails, getQuizCardDetails, progressContestByUser,getUserRank,
-    addNotification,getNotifications,markAsRead,deleteNotification,
-    deleteAllNotifications, getContestUser, submitContest, getAllContests,verifyPasswordController
- };
+    getStudyPlans, saveStudyPlan, getRoadmaps, saveRoadmap, getUserProgress, getLanguages, getCompletedMocks,
+    saveQuizResult, getMockStatus, saveMockResult, generateStudyPlan, generateRoadMap,
+    getMockCardDetails, getQuizCardDetails, progressContestByUser, getUserRank,
+    addNotification, getNotifications, markAsRead, deleteNotification,
+    deleteAllNotifications, getContestUser, submitContest, getAllContests, verifyPasswordController
+};

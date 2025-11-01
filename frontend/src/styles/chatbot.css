@@ -306,3 +306,14 @@
     padding: 8px;
   }
 }
+
+
+
+.bot-iframe {
+  width: 100%;
+  height: auto;
+  border: none;
+  border-radius: 8px;
+  overflow: hidden;
+  background: transparent;
+}

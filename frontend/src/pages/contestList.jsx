@@ -25,6 +25,8 @@ const ContestList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    const [filteredContests, setFilteredContests] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
     const contestsPerPage = 6; 
 
     const navigate = useNavigate();
@@ -77,6 +79,7 @@ const ContestList = () => {
                 });
 
                 setContests(contestData);
+                setFilteredContests(contestData); 
                 setLeaderboard(leaderboardRes.data.leaderboard || []);
 
                 if (userRankRes.data.success && userRankRes.data.userRank) {
@@ -132,6 +135,27 @@ const ContestList = () => {
         return () => clearInterval(interval);
     }, [contests]);
 
+
+
+    useEffect(() => {
+        if (!searchTerm.trim()) {
+            setFilteredContests(contests);
+            return;
+        }
+        const term = searchTerm.toLowerCase();
+        const filtered = contests.filter((contest) => {
+            const idMatch = contest._id.toLowerCase().includes(term);
+            const dateString = new Date(contest.publishDetails.date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+            }).toLowerCase();
+            const dateMatch = dateString.includes(term);
+            return idMatch || dateMatch;
+        });
+        setFilteredContests(filtered);
+        setCurrentPage(1);
+    }, [searchTerm, contests]);
 
 
     const getStatus = (contest) => {
@@ -195,10 +219,11 @@ const ContestList = () => {
     };
 
 
-    const totalPages = Math.ceil(contests.length / contestsPerPage);
+    const totalPages = Math.ceil(filteredContests.length / contestsPerPage);
     const indexOfLast = currentPage * contestsPerPage;
     const indexOfFirst = indexOfLast - contestsPerPage;
-    const currentContests = contests.slice(indexOfFirst, indexOfLast);
+    const currentContests = filteredContests.slice(indexOfFirst, indexOfLast);
+
 
     const handlePageChange = (page) => {
         if (page < 1 || page > totalPages) return;
@@ -212,6 +237,16 @@ const ContestList = () => {
     return (
         <section className="contest-list-wrapper">
             <h2><FaTrophy style={{ marginRight: "8px" }} /> Contests</h2>
+
+            <div className="contest-search-container">
+                <input
+                    type="text"
+                    className="contest-search-input"
+                    placeholder="Search by Contest ID or Date (e.g., Mar 12 2025)"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            </div>
 
             <div className="language-list">
                 <h3>Contest Questions Are Based On These Languages</h3>
