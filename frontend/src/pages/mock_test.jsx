@@ -100,9 +100,9 @@ const MockTest = () => {
               </button>
             </div>
           ))
-        ) : (
+        ) : searchTerm.trim() !== "" ? ( 
           <p className="no-results-text">No mock tests found for “{searchTerm}”.</p>
-        )}
+        ) : null}
       </div>
 
       {totalPages > 1 && (

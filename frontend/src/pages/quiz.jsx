@@ -112,9 +112,9 @@ function Quiz() {
               </button>
             </div>
           ))
-        ) : (
+        ) : searchTerm.trim() !== "" ? (     
           <p className="no-results-text">No quizzes found for “{searchTerm}”.</p>
-        )}
+        ) : null}
       </div>
 
       {totalPages > 1 && (
