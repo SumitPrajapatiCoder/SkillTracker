@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../api";
+ import api from "../api";
 import "../styles/quiz.css";
 
 function Quiz() {
   const navigate = useNavigate();
   const [quizData, setQuizData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
@@ -17,7 +15,7 @@ function Quiz() {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
-      const res = await api.get("/api/v1/user/get-quiz-cards", {
+      const res = await  api.get("/user/get-quiz-cards", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -34,7 +32,6 @@ function Quiz() {
       }
 
       setQuizData(unique);
-      setFilteredData(unique);
     } catch (err) {
       console.error("Error fetching quiz data:", err.response || err.message);
     } finally {
@@ -46,14 +43,6 @@ function Quiz() {
     fetchQuizData();
   }, []);
 
-  useEffect(() => {
-    const filtered = quizData.filter((quiz) =>
-      quiz.language.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredData(filtered);
-    setCurrentPage(1);
-  }, [searchTerm, quizData]);
-
   const handleNavigate = (card) => {
     navigate(`/quiz/${card.language}`, {
       state: { cardQuestions: card.questions, cardTime: card.time },
@@ -62,10 +51,10 @@ function Quiz() {
 
   if (loading) return <p className="loading-text">Loading quizzes...</p>;
 
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const totalPages = Math.ceil(quizData.length / itemsPerPage);
   const indexOfLast = currentPage * itemsPerPage;
   const indexOfFirst = indexOfLast - itemsPerPage;
-  const currentItems = filteredData.slice(indexOfFirst, indexOfLast);
+  const currentItems = quizData.slice(indexOfFirst, indexOfLast);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -73,6 +62,7 @@ function Quiz() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
+
 
   const startPage = Math.max(1, currentPage - Math.floor(pageWindow / 2));
   const endPage = Math.min(totalPages, startPage + pageWindow - 1);
@@ -85,36 +75,25 @@ function Quiz() {
     <div className="quiz-page">
       <h2 className="quiz-title">Choose A Quiz</h2>
 
-      <div className="quiz-search-container">
-        <input
-          type="text"
-          className="quiz-search-input"
-          placeholder="Search by language..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
-
       <div className="quiz-card-container">
-        {currentItems.length > 0 ? (
-          currentItems.map((card, index) => (
-            <div key={`${card.language}-${index}`} className="quiz-card">
-              <div className="quiz-card-header">{card.language}</div>
-              <div className="quiz-card-content">
-                <p>Questions: {card.questions}</p>
-                <p>Time: {card.time} mins</p>
-              </div>
-              <button
-                className="quiz-button"
-                onClick={() => handleNavigate(card)}
-              >
-                Start Quiz
-              </button>
+        {currentItems.map((card, index) => (
+          <div
+            key={`${card.language}-${index}`} 
+            className="quiz-card"
+          >
+            <div className="quiz-card-header">{card.language}</div>
+            <div className="quiz-card-content">
+              <p>Questions: {card.questions}</p>
+              <p>Time: {card.time} mins</p>
             </div>
-          ))
-        ) : searchTerm.trim() !== "" ? (     
-          <p className="no-results-text">No quizzes found for “{searchTerm}”.</p>
-        ) : null}
+            <button
+              className="quiz-button"
+              onClick={() => handleNavigate(card)}
+            >
+              Start Quiz
+            </button>
+          </div>
+        ))}
       </div>
 
       {totalPages > 1 && (
@@ -143,8 +122,7 @@ function Quiz() {
             <button
               key={page}
               onClick={() => handlePageChange(page)}
-              className={`quiz-page-btn ${page === currentPage ? "active" : ""
-                }`}
+              className={`quiz-page-btn ${page === currentPage ? "active" : ""}`}
             >
               {page}
             </button>
@@ -152,13 +130,10 @@ function Quiz() {
 
           {endPage < totalPages && (
             <>
-              {endPage < totalPages - 1 && (
-                <span className="quiz-ellipsis">...</span>
-              )}
+              {endPage < totalPages - 1 && <span className="quiz-ellipsis">...</span>}
               <button
                 onClick={() => handlePageChange(totalPages)}
-                className={`quiz-page-btn ${currentPage === totalPages ? "active" : ""
-                  }`}
+                className={`quiz-page-btn ${currentPage === totalPages ? "active" : ""}`}
               >
                 {totalPages}
               </button>
@@ -173,9 +148,15 @@ function Quiz() {
             Next
           </button>
         </div>
+
       )}
+
     </div>
   );
 }
 
 export default Quiz;
+
+
+
+
