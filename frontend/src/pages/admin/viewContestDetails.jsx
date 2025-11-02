@@ -90,7 +90,6 @@ const ContestView = () => {
             {!loading && contests.length === 0 && <p>No contests found.</p>}
 
             {currentContests.map((contest, idx) => (
-                console.log("publishDateTime:", contest.publishDetails.formatted),
 
                 <div key={idx} className="contest-card">
                     <div className="contest-header">
@@ -102,7 +101,7 @@ const ContestView = () => {
 
                         <p className="publish-date">
                             <strong>Published Date & Time (UTC):</strong>{" "}
-                            {new Date(contest.publishDetails).toLocaleString("en-US", {
+                            {new Date(contest.publishDetails.date).toLocaleString("en-US", {
                                 timeZone: "UTC",
                                 year: "numeric",
                                 month: "2-digit",
@@ -116,9 +115,8 @@ const ContestView = () => {
 
                         <p className="publish-date">
                             <strong>After +5:30 hr (UTC→IST):</strong>{" "}
-                            {new Date(
-                                new Date(contest.publishDetails).getTime() + 5.5 * 60 * 60 * 1000
-                            ).toLocaleString("en-IN", {
+                            {new Date(contest.publishDetails.date).toLocaleString("en-IN", {
+                                timeZone: "Asia/Kolkata",
                                 day: "2-digit",
                                 month: "short",
                                 year: "numeric",
@@ -127,6 +125,7 @@ const ContestView = () => {
                                 hour12: true,
                             })}
                         </p>
+
 
 
 
