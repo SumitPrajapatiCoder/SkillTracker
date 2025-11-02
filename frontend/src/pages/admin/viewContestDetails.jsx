@@ -91,22 +91,11 @@ const ContestView = () => {
 
             {currentContests.map((contest, idx) => (
                 <div key={idx} className="contest-card">
-                    {/* <div className="contest-header">
-                        <p className="contest-no"><strong>Contest No. {contest._id.slice(-5)}</strong></p>
-                        <p className="question-size"><strong>Question Size:</strong> {contest.questionSize}</p>
-                        <p className="time-duration"><strong>Time Duration:</strong> {contest.timeDuration} minutes</p>
-                        <p className="publish-date"><strong>Published Date & Time:</strong> {contest.publishDetails.formatted}</p>
-                    </div> */}
-
                     <div className="contest-header">
                         <p className="contest-no"><strong>Contest No. {contest._id.slice(-5)}</strong></p>
                         <p className="question-size"><strong>Question Size:</strong> {contest.questionSize}</p>
                         <p className="time-duration"><strong>Time Duration:</strong> {contest.timeDuration} minutes</p>
-
-                        <p className="publish-date">
-                            <strong>Published Date & Time (UTC):</strong> {contest.publishDetails.formatted}
-                        </p>
-
+                        <p className="publish-date"><strong>Published Date & Time:</strong> {contest.publishDetails.formatted}</p>
                         {contest.publishDateTime && (
                             <p className="publish-date-ist">
                                 After +5:30 hr (UTC → IST):{" "}
@@ -125,7 +114,6 @@ const ContestView = () => {
                             </p>
                         )}
                     </div>
-
 
                     <h3>Questions:</h3>
                     <div className="questions-list">
