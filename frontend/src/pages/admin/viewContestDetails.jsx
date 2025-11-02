@@ -26,7 +26,7 @@ const ContestView = () => {
             const sortedContests = res.data.contests.sort((a, b) =>
                 new Date(b.publishDateTime) - new Date(a.publishDateTime)
             );
-
+            
             setContests(sortedContests);
         } catch (error) {
             console.error(error);
@@ -90,13 +90,14 @@ const ContestView = () => {
             {!loading && contests.length === 0 && <p>No contests found.</p>}
 
             {currentContests.map((contest, idx) => (
+                console.log("publishDateTime:", contest.publishDateTime),
+                
                 <div key={idx} className="contest-card">
                     <div className="contest-header">
                         <p className="contest-no"><strong>Contest No. {contest._id.slice(-5)}</strong></p>
                         <p className="question-size"><strong>Question Size:</strong> {contest.questionSize}</p>
                         <p className="time-duration"><strong>Time Duration:</strong> {contest.timeDuration} minutes</p>
                         <p className="publish-date"><strong>Published Date & Time:</strong> {contest.publishDetails.formatted}</p>
-
 
 
                         <p className="publish-date">
