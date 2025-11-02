@@ -142,16 +142,6 @@ const ContestUpload = () => {
                     />
                 </div>
 
-                {/* <div className="form-group">
-                    <label>Publish Date & Time:</label>
-                    <input
-                        type="datetime-local"
-                        value={publishDateTime}
-                        onChange={(e) => setPublishDateTime(e.target.value)}
-                        className="form-input"
-                    />
-                </div> */}
-
 
                 <div className="form-group">
                     <label>Publish Date & Time:</label>

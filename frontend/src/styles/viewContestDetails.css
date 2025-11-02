@@ -128,7 +128,8 @@
   }
 
   .contest-header p.contest-no,
-  .contest-header p.publish-date {
+  .contest-header p.publish-date,
+  .contest-header p.publish-date-ist{
     text-align: center;
     justify-self: center;
   }
@@ -210,4 +211,19 @@
   padding: 0 6px;
   font-weight: 600;
   color: #000; 
+}
+
+
+.contest-header p.publish-date-ist {
+  grid-column: 1 / span 2;
+  justify-self: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: 4px;
+  color: #eff3f1; 
+}
+
+.contest-header p.publish-date-ist strong {
+  font-weight: 600;
+  color: #eff8f4;
 }
