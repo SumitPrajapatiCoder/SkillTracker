@@ -98,24 +98,30 @@ const ContestView = () => {
                         <p className="publish-date"><strong>Published Date & Time:</strong> {contest.publishDetails.formatted}</p>
 
 
-                        {(contest.publishDateTime || contest.publishDetails?.raw) && (
-                            <p className="publish-date-ist">
-                                After +5:30 hr (UTC → IST):{" "}
-                                <strong>
-                                    {new Date(
-                                        new Date(contest.publishDateTime || contest.publishDetails?.raw).getTime() +
-                                        5.5 * 60 * 60 * 1000
-                                    ).toLocaleString("en-IN", {
-                                        year: "numeric",
-                                        month: "short",
-                                        day: "numeric",
-                                        hour: "2-digit",
-                                        minute: "2-digit",
-                                        hour12: true,
-                                    })}
-                                </strong>
-                            </p>
-                        )}
+
+                        <p className="publish-date-ist"><strong>IST:</strong> {contest.publishDetails.istFormatted}</p>
+                        <p className="publish-date">
+                            <strong>Published Date (UTC):</strong>{" "}
+                            {new Date(contest.publishDateTime).toUTCString()}
+                        </p>
+
+                        <p className="publish-date-ist">
+                            <strong>Published Date (IST):</strong>{" "}
+                            {new Date(contest.publishDateTime).toLocaleString("en-IN", {
+                                timeZone: "Asia/Kolkata",
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                hour12: true,
+                            })}
+                        </p>
+
+
+
+
+
 
 
                     </div>
