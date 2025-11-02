@@ -96,34 +96,6 @@ const ContestView = () => {
                         <p className="question-size"><strong>Question Size:</strong> {contest.questionSize}</p>
                         <p className="time-duration"><strong>Time Duration:</strong> {contest.timeDuration} minutes</p>
                         <p className="publish-date"><strong>Published Date & Time:</strong> {contest.publishDetails.formatted}</p>
-
-
-
-                        <p className="publish-date-ist"><strong>IST:</strong> {contest.publishDetails.istFormatted}</p>
-                        <p className="publish-date">
-                            <strong>Published Date (UTC):</strong>{" "}
-                            {new Date(contest.publishDateTime).toUTCString()}
-                        </p>
-
-                        <p className="publish-date-ist">
-                            <strong>Published Date (IST):</strong>{" "}
-                            {new Date(contest.publishDateTime).toLocaleString("en-IN", {
-                                timeZone: "Asia/Kolkata",
-                                year: "numeric",
-                                month: "short",
-                                day: "numeric",
-                                hour: "2-digit",
-                                minute: "2-digit",
-                                hour12: true,
-                            })}
-                        </p>
-
-
-
-
-
-
-
                     </div>
 
                     <h3>Questions:</h3>
