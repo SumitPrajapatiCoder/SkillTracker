@@ -96,7 +96,8 @@ const ContestView = () => {
                         <p className="question-size"><strong>Question Size:</strong> {contest.questionSize}</p>
                         <p className="time-duration"><strong>Time Duration:</strong> {contest.timeDuration} minutes</p>
                         <p className="publish-date"><strong>Published Date & Time:</strong> {contest.publishDetails.formatted}</p>
-                        {contest.publishDateTime && (
+
+
                             <p className="publish-date-ist">
                                 After +5:30 hr (UTC → IST):{" "}
                                 <strong>
@@ -112,7 +113,9 @@ const ContestView = () => {
                                     })}
                                 </strong>
                             </p>
-                        )}
+
+
+
                     </div>
 
                     <h3>Questions:</h3>
