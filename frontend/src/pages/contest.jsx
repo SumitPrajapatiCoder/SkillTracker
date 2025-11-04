@@ -201,17 +201,16 @@ const Contest = () => {
           >
             Quit
           </button>
-
-          <h2>Contest {contest._id.slice(-6).toUpperCase()}</h2>
-
-          <div className="contest-timer">
+          <span className="contest-timer">
             ⏱ Time Left: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
-          </div>
+          </span>
         </div>
 
-        <div className="contest-header-bottom">
+        <div className="contest-header-center">
+          <h2>Contest {contest._id.slice(-6).toUpperCase()}</h2>
           <p>
-            Total Questions: {questions.length} | Duration: {contest.timeDuration} mins
+            <strong>Questions:</strong> {questions.length} |{" "}
+            <strong>Duration:</strong> {contest.timeDuration} mins
           </p>
         </div>
       </header>

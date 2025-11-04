@@ -257,96 +257,117 @@
 
 
 
+
 .contest-header {
-  background-color: #2d1e50;
-  padding: 15px 20px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.35);
-  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(145deg, #1f3c88, #253b6e);
+  border-radius: 14px;
+  padding: 18px 24px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  color: #fff;
+  margin-bottom: 25px;
+  transition: all 0.3s ease;
 }
 
 .contest-header-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
-}
-
-.contest-header-top h2 {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  margin: 0;
-  font-size: 1.9rem;
-  color: #ffb347;
-  text-align: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .contest-quit-btn {
-  background-color: #ff6f61;
-  color: white;
+  background-color: #ff4b4b;
+  color: #fff;
   border: none;
-  padding: 8px 16px;
+  padding: 8px 18px;
   border-radius: 8px;
-  cursor: pointer;
   font-weight: bold;
-  transition: background 0.3s ease;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 2px 5px rgba(255, 75, 75, 0.4);
 }
 
 .contest-quit-btn:hover {
   background-color: #e63946;
+  transform: translateY(-1px);
+}
+
+.contest-title {
+  flex: 1;
+  text-align: center;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #00e676;
+  text-shadow: 0 0 6px rgba(0, 230, 118, 0.6);
+  letter-spacing: 0.5px;
 }
 
 .contest-timer {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #ffb347;
+  background-color: rgba(0, 0, 0, 0.35);
+  border-radius: 10px;
+  padding: 6px 14px;
+  color: #00ff7f;
+  font-weight: 600;
+  font-size: 1.05rem;
+  box-shadow: 0 0 12px rgba(0, 255, 127, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: 0.3s ease;
 }
 
-.contest-header-bottom {
-  text-align: center;
+.contest-timer:hover {
+  box-shadow: 0 0 18px rgba(0, 255, 127, 0.5);
+}
+
+.contest-divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  margin: 10px 0;
+}
+
+.contest-question-info {
+  color: #e0e0e0;
+  font-size: 1.05rem;
   margin-top: 8px;
 }
 
-.contest-header-bottom p {
-  margin: 0;
-  font-size: 1rem;
-  color: #d1c4e9;
-}
-
+/* 🌐 Responsive Design */
 @media (max-width: 768px) {
+  .contest-header {
+    padding: 16px;
+  }
+
   .contest-header-top {
     flex-direction: column;
+    align-items: center;
     gap: 10px;
   }
 
-  .contest-header-top h2 {
-    position: static;
-    transform: none;
+  .contest-title {
     font-size: 1.6rem;
-  }
-
-  .contest-quit-btn {
-    width: 100%;
-    font-size: 0.95rem;
   }
 
   .contest-timer {
     font-size: 1rem;
+    padding: 6px 12px;
   }
 
-  .contest-header-bottom p {
+  .contest-question-info {
     font-size: 0.95rem;
   }
 }
 
 @media (max-width: 480px) {
   .contest-header {
-    padding: 12px 15px;
+    padding: 14px;
   }
 
-  .contest-header-top h2 {
+  .contest-title {
     font-size: 1.4rem;
   }
 
@@ -355,11 +376,11 @@
   }
 
   .contest-quit-btn {
-    padding: 6px 12px;
+    width: 100%;
+    font-size: 0.9rem;
   }
 
-  .contest-header-bottom p {
+  .contest-question-info {
     font-size: 0.9rem;
   }
 }
-

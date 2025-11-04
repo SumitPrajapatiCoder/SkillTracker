@@ -751,7 +751,7 @@ const chatbotController = async (req, res) => {
         } else {
             const formattedPrompt = `
 You are a concise, helpful AI assistant.
-Respond directly to the user's question in clean, minimal HTML.
+Respond directly to the user's question in clean.
 DO NOT repeat or restate the user’s question in your response.
 Use simple HTML tags only: <div>, <p>, <ul>, <ol>, <b>, <i>, <br>, <code>, etc.
 Avoid <html>, <body>, <style>, or external CSS/JS.
