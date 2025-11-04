@@ -738,31 +738,40 @@ const chatbotController = async (req, res) => {
 
         if (isAboutSite) {
             botResponse = `
-  <div style="font-family:Segoe UI; color:#333; line-height:1.6;">
-    <h3 style="color:#2b7cff;">Welcome to <b>SkillTracker</b></h3>
-    <p><b>SkillTracker</b> is an <b>AI-powered learning platform</b> designed to help you master programming with personalized tools.</p>
-    <ul>
-      <li>Interactive Quizzes & Mock Tests</li>
-      <li>Certificates for full marks achievers</li>
-      <li>AI study plans & learning roadmaps</li>
-      <li>Progress tracking & performance analytics</li>
-    </ul>
-  </div>`;
+      <div style="font-family:Segoe UI; color:#333; line-height:1.6;">
+        <h3 style="color:#2b7cff;">Welcome to <b>SkillTracker</b></h3>
+        <p><b>SkillTracker</b> is an <b>AI-powered learning platform</b> designed to help you master programming with personalized tools.</p>
+        <ul>
+          <li>Interactive Quizzes & Mock Tests</li>
+          <li>Certificates for full marks achievers</li>
+          <li>AI study plans & learning roadmaps</li>
+          <li>Progress tracking & performance analytics</li>
+        </ul>
+      </div>`;
         } else {
             const formattedPrompt = `
-You are a helpful assistant. Respond in HTML+CSS structure for a chatbot.
-Keep formatting simple (div, p, ul, b, etc.).
-Avoid <html>, <body> tags.
-No external CSS or JS.
+You are a concise, helpful AI assistant named Gemini.
+Respond directly to the user's question in clean, minimal HTML.
+DO NOT repeat or restate the user’s question in your response.
+Use simple HTML tags only: <div>, <p>, <ul>, <ol>, <b>, <i>, <br>, <code>, etc.
+Avoid <html>, <body>, <style>, or external CSS/JS.
+
 Conversation so far:
 ${conversationContext}
 
-User says: "${userMessage}"
+User’s latest message:
+"${userMessage}"
 `;
 
             const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
             const result = await model.generateContent([{ text: formattedPrompt }]);
-            botResponse = result?.response?.text() || "<p>No response from AI.</p>";
+            let rawResponse = result?.response?.text() || "<p>No response from AI.</p>";
+
+            botResponse = rawResponse
+                .replace(/^```[\s\S]*?html\s*/i, "")
+                .replace(/^```[\s\S]*?\n/i, "")
+                .replace(/```$/i, "")
+                .trim();
         }
 
         await userModel.findByIdAndUpdate(userId, {

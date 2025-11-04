@@ -35,7 +35,7 @@ function Chatbot() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await  api.post(
+        const res = await api.post(
           `/user/get_User_data`,
           {},
           { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
@@ -53,7 +53,7 @@ function Chatbot() {
 
     const fetchHistory = async () => {
       try {
-        const res = await  api.get("/user/chat-history", {
+        const res = await api.get("/user/chat-history", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         if (res.data.success) setMessages(res.data.chatHistory);
@@ -121,7 +121,7 @@ function Chatbot() {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await  api.post(
+      const res = await api.post(
         "/user/chatbot",
         { messages: [{ text: input }] },
         { headers: { Authorization: `Bearer ${token}` } }
@@ -148,7 +148,7 @@ function Chatbot() {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      e.preventDefault(); 
+      e.preventDefault();
       handleSend();
     }
   };
@@ -195,7 +195,7 @@ function Chatbot() {
     if (!result.isConfirmed) return;
 
     try {
-      const res = await  api.delete("/user/clear-chat-history", {
+      const res = await api.delete("/user/clear-chat-history", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       if (res.data.success) {
@@ -208,27 +208,6 @@ function Chatbot() {
       console.error("Error clearing chat:", err.message);
     }
   };
-  
-  // const handleBubbleClick = (msg, idx) => {
-  //   if (speakingRef.current !== null) speechSynthesis.cancel();
-
-  //   if (activeSoundIdx === idx) {
-  //     speakingRef.current = null;
-  //     setActiveSoundIdx(null);
-  //     return;
-  //   }
-
-  //   const utterance = new SpeechSynthesisUtterance(msg.text);
-  //   utterance.onend = () => {
-  //     speakingRef.current = null;
-  //     setActiveSoundIdx(null);
-  //   };
-
-  //   speechSynthesis.speak(utterance);
-  //   speakingRef.current = idx;
-  //   setActiveSoundIdx(idx);
-  // };
-
 
   const handleBubbleClick = (msg, idx) => {
     if (speakingRef.current !== null) speechSynthesis.cancel();
@@ -276,60 +255,7 @@ function Chatbot() {
         </div>
       </div>
 
-      {/* <div className="chat-window">
-        {messages.map((msg, idx) => (
-          <div
-            key={idx}
-            className={`chat-bubble ${msg.role === "user" ? "from-user" : "from-bot"} ${activeSoundIdx === idx ? "active-sound" : ""}`}
-            onClick={() => handleBubbleClick(msg, idx)}
-          >
-            <strong>{msg.role === "user" ? user?.username || "You" : "Gemini"}</strong>
-            <div
-              className="bubble-content"
-              dangerouslySetInnerHTML={{
-                __html: msg.text.replace(/```([\s\S]*?)```/g, (match, p1) => `<pre><code>${p1}</code></pre>`),
-              }}
-            />
-            {activeSoundIdx === idx && (
-              <span className="volume-icon">
-                <FaVolumeUp />
-              </span>
-            )}
-            <small>
-<<<<<<< HEAD
-  {msg.time
-    ? new Date(msg.time).toLocaleString("en-IN", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      })
-    : ""}
-</small>
-=======
-              {msg.time
-                ? new Date(msg.time).toLocaleString("en-IN", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  hour12: true,
-                })
-                : ""}
-            </small>
->>>>>>> ba20e27 (Add Search Function)
-          </div>
-        ))}
-        {loading && <div className="chat-bubble from-bot">Typing...</div>}
-        <div ref={chatEndRef}></div>
-      </div> */}
-
-
-
-<div className="chat-window">
+      <div className="chat-window">
         {messages.map((msg, idx) => (
           <div
             key={idx}
