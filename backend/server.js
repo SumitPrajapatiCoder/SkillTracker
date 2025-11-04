@@ -1,5 +1,5 @@
 const dotenv = require("dotenv");
-dotenv.config();  
+dotenv.config();
 
 const express = require("express");
 const morgan = require("morgan");
@@ -38,7 +38,6 @@ app.use('/api/v1/quiz', require("./routes/quizRoute"));
 
 
 
-// ✅ Serve frontend in production
 if (process.env.NODE_ENV === "production") {
     const __dirname1 = path.resolve();
     app.use(express.static(path.join(__dirname1, "../frontend/dist")));
