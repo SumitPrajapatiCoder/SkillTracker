@@ -169,7 +169,7 @@ const MockLanguage = () => {
 
   const getHighlightedQuestion = (text) => {
     if (!text) return "";
-    const cleanText = text.replace(/```[a-zA-Z0-9]*/g, "").replace(/```/g, "");
+    const cleanText = text.replace(/```[a-zA-Z]*/g, "").replace(/```/g, "").trim();
     return hljs.highlightAuto(cleanText).value;
   };
 
@@ -326,18 +326,25 @@ const MockLanguage = () => {
     <div className="quiz-language-wrapper">
       <div className="mock-header">
         <div className="mock-header-top">
-          <button className="quit-btn" onClick={() => navigate("/mock_test")}>
-            Quit
-          </button>
+          <div className="mock-quit">
+            <button onClick={() => navigate("/mock_test")}>Quit</button>
+          </div>
+
           <h2>{language} Mock Test</h2>
+
           {!completed && (
             <div className="mock-timer">
               ⏱ Time Left: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
             </div>
           )}
         </div>
-        <p>Total Questions: {questions.length}</p>
+
+        <div className="mock-header-bottom">
+          <p>Total Questions: {questions.length}</p>
+        </div>
       </div>
+
+
 
       <div className="question-box">
         <pre>

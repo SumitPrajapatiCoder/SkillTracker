@@ -10,6 +10,9 @@ const Contest = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+    const cleanCode = (code) =>
+        code.replace(/```[a-zA-Z]*/g, "").replace(/```/g, "").trim();
+
   const [contest, setContest] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [current, setCurrent] = useState(0);
@@ -187,7 +190,7 @@ const Contest = () => {
 
 
   const q = questions[current];
-  const highlightedHTML = hljs.highlightAuto(q.question).value;
+  const highlightedHTML = hljs.highlightAuto(cleanCode(q.question)).value;
   const selectedOption = answers[current] || null;
 
   return (
