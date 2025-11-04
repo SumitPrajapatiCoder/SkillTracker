@@ -762,7 +762,16 @@ User says: "${userMessage}"
 
             const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
             const result = await model.generateContent([{ text: formattedPrompt }]);
-            botResponse = result?.response?.text() || "<p>No response from AI.</p>";
+            // botResponse = result?.response?.text() || "<p>No response from AI.</p>";
+
+            let rawResponse = result?.response?.text() || "<p>No response from AI.</p>";
+
+            botResponse = rawResponse
+                .replace(/^```[\s\S]*?html\s*/i, "")
+                .replace(/^```[\s\S]*?\n/i, "")
+                .replace(/```$/i, "")
+                .trim();
+
         }
 
         await userModel.findByIdAndUpdate(userId, {
