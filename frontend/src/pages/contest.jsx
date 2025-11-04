@@ -187,8 +187,6 @@ const Contest = () => {
   }
 
 
-
-
   const q = questions[current];
   const highlightedHTML = hljs.highlightAuto(cleanCode(q.question)).value;
   const selectedOption = answers[current] || null;
@@ -203,19 +201,21 @@ const Contest = () => {
           >
             Quit
           </button>
-          <span className="contest-timer">
+
+          <h2>Contest {contest._id.slice(-6).toUpperCase()}</h2>
+
+          <div className="contest-timer">
             ⏱ Time Left: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
-          </span>
+          </div>
         </div>
 
-        <div className="contest-header-center">
-          <h2>Contest {contest._id.slice(-6).toUpperCase()}</h2>
+        <div className="contest-header-bottom">
           <p>
-            <strong>Questions:</strong> {questions.length} |{" "}
-            <strong>Duration:</strong> {contest.timeDuration} mins
+            Total Questions: {questions.length} | Duration: {contest.timeDuration} mins
           </p>
         </div>
       </header>
+
 
       <article className="contest-page-question-box">
         <pre className="contest-page-question-text">

@@ -750,10 +750,11 @@ const chatbotController = async (req, res) => {
   </div>`;
         } else {
             const formattedPrompt = `
-You are a helpful assistant. Respond in HTML+CSS structure for a chatbot.
-Keep formatting simple (div, p, ul, b, etc.).
-Avoid <html>, <body> tags.
-No external CSS or JS.
+You are a concise, helpful AI assistant.
+Respond directly to the user's question in clean, minimal HTML.
+DO NOT repeat or restate the user’s question in your response.
+Use simple HTML tags only: <div>, <p>, <ul>, <ol>, <b>, <i>, <br>, <code>, etc.
+Avoid <html>, <body>, <style>, or external CSS/JS.
 Conversation so far:
 ${conversationContext}
 
