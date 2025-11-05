@@ -397,11 +397,20 @@ You are an expert programming tutor and mentor. Based on this user's quiz histor
 ${historySummary}
 
 Goal: Produce a **fully formatted, mentor-style HTML study plan** for ${lang} that is practical, interactive, and visually engaging. Use tables, lists, headers, exercises, and resources to make it easy to follow and actionable.
+don't use Q1 or question numbers in the plan.
 `;
 
             const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
             const result = await model.generateContent([prompt]);
-            return result.response.text();
+            let rawResponse = result?.response?.text() || "<p>No response from AI.</p>";
+
+            const cleanedResponse = rawResponse
+                .replace(/^```[\s\S]*?html\s*/i, "")
+                .replace(/^```[\s\S]*?\n/i, "")
+                .replace(/```$/i, "")
+                .trim();
+
+            return cleanedResponse;
         }
 
         if (language) {
@@ -534,6 +543,7 @@ You are an expert programming mentor AI. Based on this user's quiz history in ${
 ${historySummary}
 
 Goal: Produce a **fully formatted, mentor-style HTML roadmap** for ${lang}, focusing on practical mastery, motivation, and clear progression. Use tables, lists, headings, exercises, routines, and resources to make the roadmap visually engaging and easy to follow.
+don't use Q1 or question numbers in the plan.
 `;
 
 
@@ -541,7 +551,17 @@ Goal: Produce a **fully formatted, mentor-style HTML roadmap** for ${lang}, focu
 
             const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
             const result = await model.generateContent([prompt]);
-            return result.response.text();
+
+            let rawResponse = result?.response?.text() || "<p>No response from AI.</p>";
+
+            const cleanedResponse = rawResponse
+                .replace(/^```[\s\S]*?html\s*/i, "")
+                .replace(/^```[\s\S]*?\n/i, "")
+                .replace(/```$/i, "")
+                .trim();
+
+            return cleanedResponse;
+
         }
 
         if (language) {
@@ -733,39 +753,131 @@ const chatbotController = async (req, res) => {
             userMessage.toLowerCase().includes(keyword.toLowerCase())
         );
 
+//         let botResponse = "";
+
+
+//         if (isAboutSite) {
+//             botResponse = `
+//   <div style="font-family:Segoe UI; color:#333; line-height:1.6;">
+//     <h3 style="color:#2b7cff;">Welcome to <b>SkillTracker</b></h3>
+//     <p><b>SkillTracker</b> is an <b>AI-powered learning platform</b> designed to help you master programming with personalized tools.</p>
+//     <ul>
+//       <li>Interactive Quizzes & Mock Tests</li>
+//       <li>Certificates for full marks achievers</li>
+//       <li>AI study plans & learning roadmaps</li>
+//       <li>Progress tracking & performance analytics</li>
+//     </ul>
+//   </div>`;
+//         } else {
+//             const formattedPrompt = `
+// You are a concise, helpful AI assistant.
+// Respond directly to the user's question in clean.
+// DO NOT repeat or restate the user’s question in your response.
+// Use simple HTML tags only: <div>, <p>, <ul>, <ol>, <b>, <i>, <br>, <code>, etc.
+// Avoid <html>, <body>, <style>, or external CSS/JS.
+// Conversation so far:
+// ${conversationContext}
+
+// User says: "${userMessage}"
+// `;
+
+//             const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
+//             const result = await model.generateContent([{ text: formattedPrompt }]);
+//             botResponse = result?.response?.text() || "<p>No response from AI.</p>";
+
+//         }
+
+
+
+
+
         let botResponse = "";
 
 
         if (isAboutSite) {
             botResponse = `
-  <div style="font-family:Segoe UI; color:#333; line-height:1.6;">
-    <h3 style="color:#2b7cff;">Welcome to <b>SkillTracker</b></h3>
-    <p><b>SkillTracker</b> is an <b>AI-powered learning platform</b> designed to help you master programming with personalized tools.</p>
-    <ul>
-      <li>Interactive Quizzes & Mock Tests</li>
-      <li>Certificates for full marks achievers</li>
-      <li>AI study plans & learning roadmaps</li>
-      <li>Progress tracking & performance analytics</li>
-    </ul>
-  </div>`;
-        } else {
-            const formattedPrompt = `
-You are a concise, helpful AI assistant.
-Respond directly to the user's question in clean.
-DO NOT repeat or restate the user’s question in your response.
-Use simple HTML tags only: <div>, <p>, <ul>, <ol>, <b>, <i>, <br>, <code>, etc.
-Avoid <html>, <body>, <style>, or external CSS/JS.
-Conversation so far:
-${conversationContext}
+  <div style="font-family: 'Segoe UI', sans-serif; color: #1e293b; line-height: 1.6; background: #f8fafc; padding: 20px; border-radius: 10px;">
+    <h2 style="color: #2563eb;">Welcome to <strong>SkillTracker</strong></h2>
+    <p>
+      <strong>SkillTracker</strong> is an <strong>AI-powered learning platform</strong> built to help you master programming in a structured and personalized way!
+    </p>
 
-User says: "${userMessage}"
+    <h3 style="color: #16a34a;">What SkillTracker Offers:</h3>
+    <ul style="margin-left: 20px;">
+      <li><strong>Interactive Quizzes & Mock Tests:</strong> Practice programming with topic-wise quizzes and mock tests for <strong>Java</strong>, <strong>C</strong>, and <strong>C++</strong>.</li>
+      <li><strong>Certificates:</strong> Earn certificates after completing mock tests to showcase your skills.</li>
+      <li><strong>AI-Powered Study Plans & Roadmaps:</strong> Automatically generated personalized learning paths based on your quiz results.</li>
+      <li><strong>Built-in AI Chatbot:</strong> Instantly solve coding problems or clarify doubts through an AI assistant.</li>
+      <li><strong>User Progress Tracking:</strong> Monitor your progress, view quiz history, and check which mocks are pending or completed.</li>
+    </ul>
+
+    <h3 style="color: #9333ea;">Technology Stack:</h3>
+    <ul style="margin-left: 20px;">
+      <li><strong>Frontend:</strong> HTML, CSS, React.js (Vite)</li>
+      <li><strong>Backend:</strong> Node.js, Express.js, JavaScript</li>
+      <li><strong>Database:</strong> MongoDB</li>
+    </ul>
+
+    <p style="margin-top: 15px; font-weight: 500;">
+      In short, <strong>SkillTracker</strong> blends AI-driven learning, progress tracking, and interactive practice to make coding education 
+      <span style="color:#16a34a;">smarter, personalized, and results-driven</span>.
+    </p>
+  </div>
+  `;
+
+        } else {
+
+            const formattedPrompt = `
+You are a professional and engaging AI assistant designed for a web-based chat interface.  
+Your response will be rendered directly inside an <iframe>, so you must respond **only using HTML with inline CSS** — no markdown, JavaScript, or external files.
+
+**Style & Formatting Rules:**
+- Wrap everything inside a main <div> with a clean, modern look.
+- Use inline CSS for all styling — including gradients, borders, shadows, and spacing.
+- Use system-friendly fonts like 'Segoe UI', 'Poppins', or 'Inter'.
+- Incorporate **subtle color gradients**, **soft shadows**, and **emoji accents** to make content friendly and eye-catching.
+- Structure content with <p>, <strong>, <ul>, <li>, and <span> tags.
+- Keep paragraphs short and conversational.
+- Avoid <html>, <head>, <body>, or external references.
+
+**Tone:**
+- Warm, clear, and professional — like a knowledgeable friend guiding the user.
+- Add mini sections, highlights, and smooth readability.
+
+---
+
+Now perform these steps:
+
+1. **Analyze** the user's latest message below:
+   \`\`\`
+   ${userMessage}
+   \`\`\`
+   - Identify if the message is a question, request, opinion, or feedback.
+   - Detect the topic or intent (e.g., “quiz help”, “AI feature”, “mock test”, etc.).
+
+2. **Generate your HTML response** that:
+   - Clearly addresses the user’s intent.
+   - Uses visually appealing layout & inline CSS to attract attention.
+   - Emphasizes key ideas using gradient text, icons, and highlighted spans.
+   - Feels interactive and human — not robotic.
+
+3. **Output only your final HTML response**
+
+Generate your final response now.
 `;
+
 
             const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
             const result = await model.generateContent([{ text: formattedPrompt }]);
-            botResponse = result?.response?.text() || "<p>No response from AI.</p>";
+            let rawResponse = result?.response?.text() || "<p>No response from AI.</p>";
 
+            botResponse = rawResponse
+                .replace(/^```[\s\S]*?html\s*/i, "")
+                .replace(/^```[\s\S]*?\n/i, "")
+                .replace(/```$/i, "")
+                .trim();
         }
+
 
         await userModel.findByIdAndUpdate(userId, {
             $push: {
