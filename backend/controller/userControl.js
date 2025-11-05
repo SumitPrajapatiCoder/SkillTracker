@@ -808,6 +808,16 @@ Your response will be rendered directly inside an <iframe>, so you must respond 
 
 ---
 
+💬 **Conversation Context:**
+Below is the recent chat history between the user and the assistant.
+Use it to understand the flow, prior questions, and references so your answer feels naturally connected.
+
+\`\`\`
+${conversationContext}
+\`\`\`
+
+---
+
 Now perform these steps:
 
 1. **Analyze** the user's latest message below:
