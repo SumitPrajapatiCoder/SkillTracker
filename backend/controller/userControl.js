@@ -753,56 +753,18 @@ const chatbotController = async (req, res) => {
             userMessage.toLowerCase().includes(keyword.toLowerCase())
         );
 
-//         let botResponse = "";
-
-
-//         if (isAboutSite) {
-//             botResponse = `
-//   <div style="font-family:Segoe UI; color:#333; line-height:1.6;">
-//     <h3 style="color:#2b7cff;">Welcome to <b>SkillTracker</b></h3>
-//     <p><b>SkillTracker</b> is an <b>AI-powered learning platform</b> designed to help you master programming with personalized tools.</p>
-//     <ul>
-//       <li>Interactive Quizzes & Mock Tests</li>
-//       <li>Certificates for full marks achievers</li>
-//       <li>AI study plans & learning roadmaps</li>
-//       <li>Progress tracking & performance analytics</li>
-//     </ul>
-//   </div>`;
-//         } else {
-//             const formattedPrompt = `
-// You are a concise, helpful AI assistant.
-// Respond directly to the user's question in clean.
-// DO NOT repeat or restate the user’s question in your response.
-// Use simple HTML tags only: <div>, <p>, <ul>, <ol>, <b>, <i>, <br>, <code>, etc.
-// Avoid <html>, <body>, <style>, or external CSS/JS.
-// Conversation so far:
-// ${conversationContext}
-
-// User says: "${userMessage}"
-// `;
-
-//             const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
-//             const result = await model.generateContent([{ text: formattedPrompt }]);
-//             botResponse = result?.response?.text() || "<p>No response from AI.</p>";
-
-//         }
-
-
-
-
-
         let botResponse = "";
 
 
         if (isAboutSite) {
             botResponse = `
   <div style="font-family: 'Segoe UI', sans-serif; color: #1e293b; line-height: 1.6; background: #f8fafc; padding: 20px; border-radius: 10px;">
-    <h2 style="color: #2563eb;">Welcome to <strong>SkillTracker</strong></h2>
+    <h2 style="color: #2563eb;">Welcome to <strong>SkillTracker</strong> 🎯</h2>
     <p>
       <strong>SkillTracker</strong> is an <strong>AI-powered learning platform</strong> built to help you master programming in a structured and personalized way!
     </p>
 
-    <h3 style="color: #16a34a;">What SkillTracker Offers:</h3>
+    <h3 style="color: #16a34a;">✨ What SkillTracker Offers:</h3>
     <ul style="margin-left: 20px;">
       <li><strong>Interactive Quizzes & Mock Tests:</strong> Practice programming with topic-wise quizzes and mock tests for <strong>Java</strong>, <strong>C</strong>, and <strong>C++</strong>.</li>
       <li><strong>Certificates:</strong> Earn certificates after completing mock tests to showcase your skills.</li>
@@ -811,7 +773,7 @@ const chatbotController = async (req, res) => {
       <li><strong>User Progress Tracking:</strong> Monitor your progress, view quiz history, and check which mocks are pending or completed.</li>
     </ul>
 
-    <h3 style="color: #9333ea;">Technology Stack:</h3>
+    <h3 style="color: #9333ea;">🧠 Technology Stack:</h3>
     <ul style="margin-left: 20px;">
       <li><strong>Frontend:</strong> HTML, CSS, React.js (Vite)</li>
       <li><strong>Backend:</strong> Node.js, Express.js, JavaScript</li>
@@ -826,12 +788,11 @@ const chatbotController = async (req, res) => {
   `;
 
         } else {
-
             const formattedPrompt = `
 You are a professional and engaging AI assistant designed for a web-based chat interface.  
 Your response will be rendered directly inside an <iframe>, so you must respond **only using HTML with inline CSS** — no markdown, JavaScript, or external files.
 
-**Style & Formatting Rules:**
+🎨 **Style & Formatting Rules:**
 - Wrap everything inside a main <div> with a clean, modern look.
 - Use inline CSS for all styling — including gradients, borders, shadows, and spacing.
 - Use system-friendly fonts like 'Segoe UI', 'Poppins', or 'Inter'.
@@ -840,8 +801,9 @@ Your response will be rendered directly inside an <iframe>, so you must respond 
 - Keep paragraphs short and conversational.
 - Avoid <html>, <head>, <body>, or external references.
 
-**Tone:**
+🧠 **Tone:**
 - Warm, clear, and professional — like a knowledgeable friend guiding the user.
+- Use friendly icons (✨💡📘🚀✅ etc.) for engagement.
 - Add mini sections, highlights, and smooth readability.
 
 ---
@@ -867,6 +829,7 @@ Generate your final response now.
 `;
 
 
+
             const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
             const result = await model.generateContent([{ text: formattedPrompt }]);
             let rawResponse = result?.response?.text() || "<p>No response from AI.</p>";
@@ -877,6 +840,8 @@ Generate your final response now.
                 .replace(/```$/i, "")
                 .trim();
         }
+
+
 
 
         await userModel.findByIdAndUpdate(userId, {
