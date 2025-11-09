@@ -6,6 +6,10 @@ import { FaBars, FaTimes, FaChevronDown, FaChevronUp, FaBell } from "react-icons
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import defaultAvatar from "../assets/default-avatar.png";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const MySwal = withReactContent(Swal);
 
 
 const Header = () => {
@@ -63,11 +67,25 @@ const Header = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleLogout = () => {
-    localStorage.clear();
-    toast.success("Logout Successful!");
-    navigate("/");
-  };
+  const handleLogout = async () => {
+      const result = await MySwal.fire({
+        title: "Are you sure?",
+        text: "Do you really want to log out?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, log out!",
+      });
+  
+      if (!result.isConfirmed) return;
+  
+      localStorage.clear();
+      toast.success("Logout Successful!");
+      MySwal.fire("Logged Out!", "You have been logged out successfully.", "success");
+      navigate("/");
+    };
+  
 
   const handleLinkClick = () => {
     setShowDropdown(false);

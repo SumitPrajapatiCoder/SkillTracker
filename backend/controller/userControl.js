@@ -725,8 +725,23 @@ const chatbotController = async (req, res) => {
         const userMessage = messages[messages.length - 1].text
             || messages[messages.length - 1].parts?.[0]?.text;
 
-        const user = await userModel.findById(userId).select("chatHistory");
-        const history = user?.chatHistory || [];
+
+          const user = await userModel.findById(userId).lean();
+                if (!user) {
+                    return res.status(404).json({ success: false, message: "User not found" });
+                }
+        
+                const userDetails = Object.entries(user)
+                    .map(([key, value]) => {
+                        if (typeof value === "object") {
+                            return `${key}: ${JSON.stringify(value, null, 2)}`;
+                        }
+                        return `${key}: ${value}`;
+                    })
+                    .join("\n");
+
+        const users = await userModel.findById(userId).select("chatHistory");
+        const history = users?.chatHistory || [];
         const recentHistory = history.slice(-20);
 
         let conversationContext = "";
@@ -788,6 +803,58 @@ const chatbotController = async (req, res) => {
   `;
 
         } else {
+//             const formattedPrompt = `
+// You are a professional and engaging AI assistant designed for a web-based chat interface.  
+// Your response will be rendered directly inside an <iframe>, so you must respond **only using HTML with inline CSS** — no markdown, JavaScript, or external files.
+
+// 🎨 **Style & Formatting Rules:**
+// - Wrap everything inside a main <div> with a clean, modern look.
+// - Use inline CSS for all styling — including gradients, borders, shadows, and spacing.
+// - Use system-friendly fonts like 'Segoe UI', 'Poppins', or 'Inter'.
+// - Incorporate **subtle color gradients**, **soft shadows**, and **emoji accents** to make content friendly and eye-catching.
+// - Structure content with <p>, <strong>, <ul>, <li>, and <span> tags.
+// - Keep paragraphs short and conversational.
+// - Avoid <html>, <head>, <body>, or external references.
+
+// 🧠 **Tone:**
+// - Warm, clear, and professional — like a knowledgeable friend guiding the user.
+// - Use friendly icons (✨💡📘🚀✅ etc.) for engagement.
+// - Add mini sections, highlights, and smooth readability.
+
+// ---
+
+// 💬 **Conversation Context:**
+// Below is the recent chat history between the user and the assistant.
+// Use it to understand the flow, prior questions, and references so your answer feels naturally connected.
+
+// \`\`\`
+// ${conversationContext}
+// \`\`\`
+
+// ---
+
+// Now perform these steps:
+
+// 1. **Analyze** the user's latest message below:
+//    \`\`\`
+//    ${userMessage}
+//    \`\`\`
+//    - Identify if the message is a question, request, opinion, or feedback.
+//    - Detect the topic or intent (e.g., “quiz help”, “AI feature”, “mock test”, etc.).
+
+// 2. **Generate your HTML response** that:
+//    - Clearly addresses the user’s intent.
+//    - Uses visually appealing layout & inline CSS to attract attention.
+//    - Emphasizes key ideas using gradient text, icons, and highlighted spans.
+//    - Feels interactive and human — not robotic.
+
+// 3. **Output only your final HTML response**
+
+// Generate your final response now.
+// `;
+
+
+
             const formattedPrompt = `
 You are a professional and engaging AI assistant designed for a web-based chat interface.  
 Your response will be rendered directly inside an <iframe>, so you must respond **only using HTML with inline CSS** — no markdown, JavaScript, or external files.
@@ -808,15 +875,24 @@ Your response will be rendered directly inside an <iframe>, so you must respond 
 
 ---
 
+User Details:
+\`\`\`
+${userDetails}
+\`\`\`
+------
+
+
+
 💬 **Conversation Context:**
 Below is the recent chat history between the user and the assistant.
 Use it to understand the flow, prior questions, and references so your answer feels naturally connected.
+
 
 \`\`\`
 ${conversationContext}
 \`\`\`
 
----
+----
 
 Now perform these steps:
 
@@ -839,7 +915,6 @@ Generate your final response now.
 `;
 
 
-
             const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
             const result = await model.generateContent([{ text: formattedPrompt }]);
             let rawResponse = result?.response?.text() || "<p>No response from AI.</p>";
@@ -850,8 +925,6 @@ Generate your final response now.
                 .replace(/```$/i, "")
                 .trim();
         }
-
-
 
 
         await userModel.findByIdAndUpdate(userId, {

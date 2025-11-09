@@ -45,6 +45,7 @@ const UserDetails = () => {
                 <Descriptions.Item label="Email">{user.email}</Descriptions.Item>
                 <Descriptions.Item label="Role">{user.isAdmin ? "Admin" : "User"}</Descriptions.Item>
                 <Descriptions.Item label="Status">{user.isBlocked ? "Blocked" : "Active"}</Descriptions.Item>
+                <Descriptions.Item label="Contest Rank">{user.contestRank !== null ? user.contestRank : "Not participated"}</Descriptions.Item>
 
                 <Descriptions.Item label="Profile Image URL">
                     <span className="profile-image-url">{user.profileImage}</span>
@@ -218,10 +219,16 @@ const UserDetails = () => {
                     {user.studyPlans &&
                         Object.entries(user.studyPlans).map(([topic, content], idx) => (
                             <Card key={idx} className="history-item">
-                                <p>
+                                <p className="history-title">
                                     <strong>{topic}</strong>
                                 </p>
-                                <pre>{content}</pre>
+                                <div className="iframe-container">
+                                    <iframe
+                                        title={`Study Plan ${idx}`}
+                                        srcDoc={content}
+                                        sandbox="allow-scripts allow-same-origin"
+                                    />
+                                </div>
                             </Card>
                         ))}
                 </Panel>
@@ -230,10 +237,16 @@ const UserDetails = () => {
                     {user.roadmap &&
                         Object.entries(user.roadmap).map(([topic, content], idx) => (
                             <Card key={idx} className="history-item">
-                                <p>
+                                <p className="history-title">
                                     <strong>{topic}</strong>
                                 </p>
-                                <pre>{content}</pre>
+                                <div className="iframe-container">
+                                    <iframe
+                                        title={`Roadmap ${idx}`}
+                                        srcDoc={content}
+                                        sandbox="allow-scripts allow-same-origin"
+                                    />
+                                </div>
                             </Card>
                         ))}
                 </Panel>
@@ -261,12 +274,24 @@ const UserDetails = () => {
                         <p>No chat history</p>
                     ) : (
                         user.chatHistory.map((chat, idx) => (
-                            <Card key={idx} className="history-item">
-                                <p>
+                            <Card key={idx} className={`history-item ${chat.role === "bot" ? "bot-message" : "user-message"}`}>
+                                <p className="chat-role">
                                     <strong>Role:</strong> {chat.role}
                                 </p>
-                                <p>{chat.text}</p>
-                                <p>
+
+                                {chat.role === "bot" ? (
+                                    <div className="iframe-container">
+                                        <iframe
+                                            title={`Bot Response ${idx}`}
+                                            srcDoc={chat.text}
+                                            sandbox="allow-scripts allow-same-origin"
+                                        />
+                                    </div>
+                                ) : (
+                                    <p className="chat-text">{chat.text}</p>
+                                )}
+
+                                <p className="chat-date">
                                     <strong>Date:</strong> {new Date(chat.time).toLocaleString()}
                                 </p>
                             </Card>
