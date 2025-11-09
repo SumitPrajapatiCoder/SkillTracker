@@ -639,6 +639,18 @@ const createContest = async (req, res) => {
 
     await addNotification(req.userId, `Upload contest Questions Successfully (${contest._id}).`);
 
+        const notificationMessage = `
+    Upcoming Contest Alert!
+    Contest ID: ${contest._id}
+    Date & Time: ${contest.publishDetails.formatted}
+    Total Questions: ${contest.questions.length}
+    Duration: ${timeDuration} mins
+    `;
+    
+        for (const user of allUsers) {
+          await addNotification(user._id, notificationMessage);
+        }
+
     res.status(201).json({
       success: true,
       message: "Contest created successfully",
