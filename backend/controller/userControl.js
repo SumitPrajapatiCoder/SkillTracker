@@ -11,28 +11,77 @@ const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 const { cloudinary } = require("../config/cloudinary");
 
 
+// const registerController = async (req, res) => {
+//     try {
+//         const { name, email, password } = req.body;
+
+//         const exist_user = await userModel.findOne({ email: email });
+//         if (exist_user) {
+//             return res.status(400).send({ message: 'User Already Exists', success: false });
+//         }
+
+//         const salt = await bcrypt.genSalt(10);
+//         const hashed_pass = await bcrypt.hash(password, salt);
+//         req.body.password = hashed_pass;
+
+//         const new_user = new userModel(req.body);
+//         await new_user.save();
+
+//         res.status(201).send({ message: 'Registration Successful', success: true });
+//     } catch (error) {
+//         console.log('Error From Use Control = ', error);
+//         res.status(500).send({ success: false, message: `Register Controller: ${error.message}` });
+//     }
+// };
+
+
+
+
+
+
 const registerController = async (req, res) => {
-    try {
-        const { name, email, password } = req.body;
+  try {
+    const { name, email, password } = req.body;
 
-        const exist_user = await userModel.findOne({ email: email });
-        if (exist_user) {
-            return res.status(400).send({ message: 'User Already Exists', success: false });
-        }
-
-        const salt = await bcrypt.genSalt(10);
-        const hashed_pass = await bcrypt.hash(password, salt);
-        req.body.password = hashed_pass;
-
-        const new_user = new userModel(req.body);
-        await new_user.save();
-
-        res.status(201).send({ message: 'Registration Successful', success: true });
-    } catch (error) {
-        console.log('Error From Use Control = ', error);
-        res.status(500).send({ success: false, message: `Register Controller: ${error.message}` });
+    const existUser = await userModel.findOne({ email });
+    if (existUser) {
+      return res.status(400).send({
+        success: false,
+        message: "User already exists",
+      });
     }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new userModel({
+      name,
+      email,
+      password: hashedPassword,
+    });
+
+    await newUser.save();
+
+    res.status(201).send({
+      success: true,
+      message: "Registration successful",
+    });
+
+  } catch (error) {
+
+    if (error.code === 11000) {
+      return res.status(400).send({
+        success: false,
+        message: "Email already registered",
+      });
+    }
+
+    res.status(500).send({
+      success: false,
+      message: error.message,
+    });
+  }
 };
+
 
 
 const loginController = async (req, res) => {
